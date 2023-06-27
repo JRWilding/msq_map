@@ -103,24 +103,24 @@ func toPoly():
 	var floorcol = CollisionShape3D.new()
 	floorcol.name = "CollisionObject3D#Floor"
 	floorcol.shape = BoxShape3D.new()
-	floorcol.position = Vector3(iw/2, -0.5, ih/2)
+	floorcol.position = Vector3(iw/2.0, -0.5, ih/2.0)
 	floorcol.shape.size = Vector3(iw, 1, ih)
 	
 	add_child(floorcol)
 	floorcol.set_owner(get_tree().get_edited_scene_root())
 	
-	var floor = MeshInstance3D.new()
-	floor.mesh = PlaneMesh.new()
-	floor.mesh.center_offset = Vector3(iw/2, 0, ih/2)
-	floor.mesh.size = Vector2(iw, ih)
-	var material = floor.mesh.material
+	var floorMesh = MeshInstance3D.new()
+	floorMesh.mesh = PlaneMesh.new()
+	floorMesh.mesh.center_offset = Vector3(iw/2.0, 0, ih/2.0)
+	floorMesh.mesh.size = Vector2(iw, ih)
+	var material = floorMesh.mesh.material
 	material = material if material != null else StandardMaterial3D.new()
 	material.albedo_color = Color(0, 0, 0)
-	floor.mesh.material = material
+	floorMesh.mesh.material = material
 	
-	floor.name = "MeshInstance3D#Floor"
-	add_child(floor)
-	floor.set_owner(get_tree().get_edited_scene_root())
+	floorMesh.name = "MeshInstance3D#Floor"
+	add_child(floorMesh)
+	floorMesh.set_owner(get_tree().get_edited_scene_root())
 	
 	var scount = 0
 	for shape in shapes:
@@ -175,21 +175,13 @@ func toPoly():
 		var count = 0
 		var lastConfig: int = -1
 		var prev = Vector2(-1,-1)
-		var prevVec: Vector2
 		
 		while (count < shape.numEdges + 50):
 			var line = c.lineB if c.lineB != null && c.lineB.get_point_position(0) == prev else c.lineA
 			var start = line.get_point_position(0)
 			var end = line.get_point_position(1)
 			prev = end
-			
-			var collinear = false
-			var vec = (end - start).normalized()
-			if prevVec != null:
-				collinear = prevVec.is_equal_approx(vec)
-				
-			prevVec = vec
-						
+									
 			match c.msq:
 				1:
 					c = move(c, 0, 1)
@@ -331,7 +323,9 @@ func rebuild():
 				var shape = shapes.size()
 				shapes.push_back(Shape.new(shape))
 				fill(x,y,shape)
-				
+	
+	for s in shapes:
+		print(str(s.id), " = ", str(s.list.size()), " ", str(s.numEdges), str(s.verts.size()))	
 	for y in range(ih):
 		for x in range(iw):
 			var d = cells[cell(x,y)]			
@@ -354,8 +348,8 @@ func marchingSquare(c: Cell):
 		
 	c.msq = config
 	
-	if c.shape != -1:
-		print(c.shape, " marching ", c.msq, " at ", c.x, ",", c.y)
+	#if c.shape != -1:
+	#	print(c.shape, " marching ", c.msq, " at ", c.x, ",", c.y)
 		
 	match c.msq:
 		1:
@@ -496,7 +490,7 @@ func addToMesh(c: Cell, p: Array):
 		return
 	#c.meshed = true
 		
-	print(c.shape, " adding ", c.msq, " to ", c.x, ",", c.y, " = ", p)
+	#print(c.shape, " adding ", c.msq, " to ", c.x, ",", c.y, " = ", p)
 	if (p.size() >= 3):
 		addToMesh2(c, p[0], p[1], p[2])
 	
@@ -541,8 +535,8 @@ func fill(sx: int, sy: int, shape: int):
 				if d.shape != -1:
 					continue
 					
-				if d.msq != 0:
-					d.shape = shape
+				#if d.msq != 0:
+				d.shape = shape
 					
 				if not d.isSolid:
 					d.isEdge = true
