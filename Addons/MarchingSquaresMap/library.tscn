@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwl2bs7f4sb0t"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gqyot"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MarchingSquares" type="Node" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -0.16, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_gqyot")
+
+[node name="1" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0.5, 0.5, 1, 0, 1)
+
+[node name="2" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(1, 0.5, 1, 1, 0.5, 1)
+
+[node name="3" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0.5, 1, 0.5, 1, 1, 0, 1)
+
+[node name="4" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0.5, 0, 1, 0, 1, 0.5)
+
+[node name="5" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0.5, 0.5, 0, 1, 0, 1, 0.5, 0.5, 1, 0, 1)
+
+[node name="6" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0.5, 0, 1, 0, 1, 1, 0.5, 1)
+
+[node name="7" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0.5, 0.5, 0, 1, 0, 1, 1, 0, 1)
+
+[node name="8" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 0.5, 0, 0, 0.5)
+
+[node name="9" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 0.5, 0, 0.5, 1, 0, 1)
+
+[node name="10" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 0.5, 0, 1, 0.5, 1, 1, 0.5, 1, 0, 0.5)
+
+[node name="11" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 0.5, 0, 1, 0.5, 1, 1, 0, 1)
+
+[node name="12" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 0.5, 0, 0.5)
+
+[node name="13" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 0.5, 0.5, 1, 0, 1)
+
+[node name="14" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 1, 0.5, 1, 0, 0.5)
+
+[node name="15" type="CSGPolygon3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -1, 0, 2, -4.37114e-08, -1, 0, -1)
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 1, 0, 1)
