@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://o7k16culfdw4"]
+
+[ext_resource type="Script" path="res://Addons/FreelookCamera/free_look_camera.gd" id="1_d1ccy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ehkqn"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3sbt3"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i0w4j"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_750ly"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yl4be"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("BoxMesh_ehkqn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("ConvexPolygonShape3D_3sbt3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_i0w4j")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4)
+script = ExtResource("1_d1ccy")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("CylinderMesh_750ly")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("CylinderShape3D_yl4be")

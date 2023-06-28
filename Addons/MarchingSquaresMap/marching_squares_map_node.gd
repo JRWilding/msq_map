@@ -12,6 +12,15 @@ extends StaticBody3D
 		
 		rebuild()
 		toPoly()
+
+@export var mapScale: float = 1:
+	set(newMapScale):
+		mapScale = newMapScale
+		
+		if get_tree() == null:
+			return
+			
+		toPoly()
 		
 @export var wallHeight: float = 2:
 	set(new_wallHeight):
@@ -100,19 +109,25 @@ func toPoly():
 	if shapes.is_empty():
 		return
 	
+	var siw = iw * mapScale
+	var sih = ih * mapScale
+	var vMapHeight = Vector3(1,wallHeight,1)
+	var vMapScale = Vector3(mapScale, 1, mapScale)
+	var vMapScale2 = Vector2(mapScale, mapScale)
+	
 	var floorcol = CollisionShape3D.new()
 	floorcol.name = "CollisionObject3D#Floor"
 	floorcol.shape = BoxShape3D.new()
-	floorcol.position = Vector3(iw/2.0, -0.5, ih/2.0)
-	floorcol.shape.size = Vector3(iw, 1, ih)
+	floorcol.position = Vector3(siw/2.0, -0.5, sih/2.0)
+	floorcol.shape.size = Vector3(siw, 1, sih)
 	
 	add_child(floorcol)
 	floorcol.set_owner(get_tree().get_edited_scene_root())
 	
 	var floorMesh = MeshInstance3D.new()
 	floorMesh.mesh = PlaneMesh.new()
-	floorMesh.mesh.center_offset = Vector3(iw/2.0, 0, ih/2.0)
-	floorMesh.mesh.size = Vector2(iw, ih)
+	floorMesh.mesh.center_offset = Vector3(siw/2.0, 0, sih/2.0)
+	floorMesh.mesh.size = Vector2(siw, sih)
 	var material = floorMesh.mesh.material
 	material = material if material != null else StandardMaterial3D.new()
 	material.albedo_color = Color(0, 0, 0)
@@ -148,6 +163,7 @@ func toPoly():
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
 		st.set_color(Color(1, 0, 0))
 		st.set_uv(Vector2(0, 0))
+		st.commit
 		
 		var stc = SurfaceTool.new()
 		stc.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -215,7 +231,7 @@ func toPoly():
 			if not straight(c.msq, lastConfig):
 				if debug:
 					print("appending ", end)
-				polyg.append(end)
+				polyg.append(end * vMapScale2)
 				
 				
 			lastConfig = c.msq
@@ -258,7 +274,7 @@ func toPoly():
 			print("close ", s, " to ", e)
 		
 		for vert in shape.verts:
-			stc.add_vertex(vert)
+			stc.add_vertex(vert * vMapHeight * vMapScale)
 			if debug:
 				print("ceiling: ", vert)
 			
@@ -443,23 +459,23 @@ func marchingSquare(c: Cell):
 
 		15:
 			var size = 1
-			var done = true
-			while not done && c.x + size + 1 < iw && c.y + size + 1 < ih:
-				for x in range(c.x, c.x + size + 2):
+			var done = false
+			while not done && c.x + size < iw && c.y + size < ih:
+				for x in range(c.x, c.x + size + 1):
 					var d = cells[cell(x, c.y + size)]
 					if d.msq != 15 || d.shape != c.shape || d.meshed:
 						done = true
 						break
-				for y in range(c.y, c.y + size + 2):
+				for y in range(c.y, c.y + size + 1):
 					var d = cells[cell(c.x + size, y)]
 					if d.msq != 15 || d.shape != c.shape || d.meshed:
 						done = true
 						break
 				size += 1
 			
-			var tr2 = add(c,tr,size-1)
-			var br2 = add(c,br,size-1,size-1)
-			var bl2 = add(c,bl,0,size-1)
+			var tr2 = add(c,tr,size-2)
+			var br2 = add(c,br,size-2,size-2)
+			var bl2 = add(c,bl,0,size-2)
 			
 			addToMesh(c, [add(c,tl),tr2,br2,bl2])
 			
@@ -473,9 +489,9 @@ func addToMesh2(c: Cell, p0: Vector2, p1: Vector2, p2: Vector2):
 		return
 	var s = shapes[c.shape]
 	
-	s.verts.push_back(Vector3(p0.x, wallHeight, p0.y))
-	s.verts.push_back(Vector3(p1.x, wallHeight, p1.y))
-	s.verts.push_back(Vector3(p2.x, wallHeight, p2.y))
+	s.verts.push_back(Vector3(p0.x, 1, p0.y))
+	s.verts.push_back(Vector3(p1.x, 1, p1.y))
+	s.verts.push_back(Vector3(p2.x, 1, p2.y))
 	
 	var indices = s.indices
 	indices.push_back(indices.size())
