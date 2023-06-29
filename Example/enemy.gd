@@ -6,8 +6,7 @@ extends RigidBody3D
 
 func _ready():
 	navAgent.velocity_computed.connect(Callable(_on_velocity_computed))
-	#setMoveTarget(Vector3(2,0.2,1))
-	var target = get_parent().get_node("Target").position
+	var target = get_node("Target").position
 	setMoveTarget(target)
 		
 func setMoveTarget(target: Vector3):

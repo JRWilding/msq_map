@@ -72,7 +72,6 @@ func addToWorld(tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstan
 	return meshNode
 
 func populateGridMap():
-	return
 	var grid: GridMap = get_node("GridMap")
 	
 	if grid.mesh_library == null:
@@ -105,8 +104,7 @@ func toPoly():
 	if image == null:
 		return
 	
-	populateGridMap()
-	#return
+	#populateGridMap()
 	
 	if false:
 		print("  | 00 01 02 03 04 05 06 07 08")
@@ -125,6 +123,9 @@ func toPoly():
 	var meshes = []
 	for i in range(16):
 		meshes.push_back(Generator.generateVerts(i))
+	
+	var region = NavigationRegion3D.new()
+	P1Utils.addEditorChild(self, region, "NavigationRegion3D")
 	
 	var chunk = 0
 	for sy in range(0, ih, chunkSize):
@@ -157,15 +158,13 @@ func toPoly():
 			
 	var floorNav = NavigationMesh.new()
 	floorNav.agent_radius = 0.5
+	floorNav.agent_max_climb = 0.2
 	floorNav.cell_size = 0.05
 	floorNav.cell_height = 0.1
 	floorNav.geometry_source_group_name = "msq_nav_floor"
 	floorNav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_EXPLICIT
 	
-	#floorNav.create_from_mesh(floorNode.mesh)
-	var region = NavigationRegion3D.new()
 	region.navigation_mesh = floorNav
-	P1Utils.addEditorChild(self, region, "NavigationRegion3D")
 	
 	region.bake_navigation_mesh(true)
 			
