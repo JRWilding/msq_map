@@ -32,7 +32,12 @@ const Generator = preload("res://Addons/MarchingSquaresMap/make_meshes.gd")
 	set(newChunkSize):
 		chunkSize = newChunkSize
 		toPoly()
-			
+
+@export var useGridMap: bool = false:
+	set(newUseGridMap):
+		useGridMap = newUseGridMap
+		toPoly()
+		
 var cellIsSolid: Array[int] = []
 var cellMSq: Array[int] = []
 var iw: int
@@ -49,16 +54,12 @@ const msNeighbour = [
 const msConfig = [
 	8, 4, 2, 1
 ]
-	
-func getGeneratedMeshes() -> Array:
-	return P1Utils.getChildrenOfType(self, MeshInstance3D)
-
-func getGeneratedNav() -> Array:
-	return P1Utils.getChildrenOfType(self, NavigationRegion3D)
-			
-func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3):
+				
+func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3) -> bool:
 	for v in verts:
 		tool.add_vertex((v + offset) * sc)
+		
+	return not verts.is_empty()
 	
 func addToWorld(parent: Node, tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
@@ -72,10 +73,10 @@ func addToWorld(parent: Node, tool: SurfaceTool, nodeName: String, color: Color)
 	return meshNode
 
 func populateGridMap():
-	var grid: GridMap = get_node("GridMap")
-	
-	if grid.mesh_library == null:
-		grid.mesh_library = load("res://Addons/MarchingSquaresMap/meshlib.tres")
+	var grid: GridMap = GridMap.new()
+	P1Utils.addEditorChild(self, grid, "GridMap")
+		
+	grid.mesh_library = load("res://Addons/MarchingSquaresMap/meshlib.tres")
 		
 	grid.cell_center_x = false
 	grid.cell_center_y = false
@@ -96,15 +97,22 @@ func toPoly():
 	
 	if not Engine.is_editor_hint() || get_tree() == null:
 		return
-	var oldNodes = P1Utils.getChildrenOfType(self, Node3D)
-	oldNodes.append_array(getGeneratedNav())
+		
+	var oldNodes = [
+		get_node("Chunks"),
+		get_node("NavigationRegion3D"),
+		get_node("GridMap")
+	]
 	for on in oldNodes:
-		remove_child(on)
+		if on != null:
+			remove_child(on)
 		
 	if image == null:
 		return
 	
-	#populateGridMap()
+	if useGridMap:
+		populateGridMap()
+		return
 	
 	if false:
 		print("  | 00 01 02 03 04 05 06 07 08")
@@ -124,8 +132,8 @@ func toPoly():
 	for i in range(16):
 		meshes.push_back(Generator.generateVerts(i))
 	
-	var region = NavigationRegion3D.new()
-	P1Utils.addEditorChild(self, region, "NavigationRegion3D")
+	var navRegion = NavigationRegion3D.new()
+	P1Utils.addEditorChild(self, navRegion, "NavigationRegion3D")
 	var chunks = Node3D.new()
 	P1Utils.addEditorChild(self, chunks, "Chunks")
 	
@@ -133,8 +141,11 @@ func toPoly():
 	for sy in range(0, ih, chunkSize):
 		for sx in range(0, iw, chunkSize):
 			
+			var hasFloor = false
 			var floorTool = P1Utils.makeTool(Color.DARK_GRAY)
+			var hasWall = false
 			var wallTool = P1Utils.makeTool(Color.DARK_SLATE_GRAY)
+			var hasCeiling = false
 			var ceilingTool = P1Utils.makeTool(Color.DIM_GRAY)
 	
 			for y in range(sy, sy + chunkSize):
@@ -146,17 +157,20 @@ func toPoly():
 					var c = cellMSq[cell(x,y)]
 					var offset = Vector3(x, 0, y)
 					var cellMesh = meshes[c]
-					copyToTool(floorTool, cellMesh[0], offset, vMapScaleWithHeight)
-					copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight)
-					copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight)
+					hasFloor = copyToTool(floorTool, cellMesh[0], offset, vMapScaleWithHeight) || hasFloor
+					hasWall = copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight) || hasWall
+					hasCeiling = copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight) || hasCeiling
 			
 			print("chunk ", chunk)
 			var c = str(chunk)
 			chunk += 1
-			addToWorld(chunks, ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
-			addToWorld(chunks, wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
-			var floorNode = addToWorld(chunks, floorTool, "Floor" + c, Color.DIM_GRAY)
-			floorNode.add_to_group("msq_nav_floor")
+			if hasCeiling:
+				addToWorld(chunks, ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
+			if hasWall:
+				addToWorld(chunks, wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
+			if hasFloor:
+				var floorNode = addToWorld(chunks, floorTool, "Floor" + c, Color.DIM_GRAY)
+				floorNode.add_to_group("msq_nav_floor")
 			
 	var floorNav = NavigationMesh.new()
 	floorNav.agent_radius = 0.5
@@ -166,9 +180,13 @@ func toPoly():
 	floorNav.geometry_source_group_name = "msq_nav_floor"
 	floorNav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_EXPLICIT
 	
-	region.navigation_mesh = floorNav
+	navRegion.navigation_mesh = floorNav
 	
-	region.bake_navigation_mesh(true)
+	navRegion.bake_navigation_mesh(true)
+	
+	var offset = Vector3(-iw, 0, -ih) * vMapScaleWithHeight * 0.5
+	navRegion.translate(offset)
+	chunks.translate(offset)
 			
 func rebuild():
 	
