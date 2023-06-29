@@ -32,7 +32,7 @@ const ul = Vector3(0.0, 1, 0.5)
 # returns an Array[Array[Vector3]] for 1 cell with the given marching square config
 # Arrays are the triangles for floor, wall, ceiling, in order
 # (the outer array will be size=3)
-static func generateMesh(config: int) -> Array[Array]:
+static func generateVerts(config: int) -> Array[Array]:
 	var floor = []
 	var wall = []
 	var ceiling = []
@@ -190,23 +190,50 @@ static func generateMesh(config: int) -> Array[Array]:
 		var v3 = verts[i+2]
 		var y = v1.y + v2.y + v3.y
 		var arr = floor if y == 0 else ceiling if y == 3 else wall
-		arr.push_back(v1)
 		arr.push_back(v2)
 		arr.push_back(v3)
+		arr.push_back(v1)
 	
 	return [floor, wall, ceiling]
 	
 func generateNode(config: int) -> MeshInstance3D:
-	var mesh = MeshInstance3D.new()
-	P1Utils.addEditorChild(self, mesh, "mesh" + str(config))
-	var arr = generateMesh(config)
-	var tool = P1Utils.makeTool()
-	for a in arr:
-		for v in a:
-			tool.add_vertex(v)
-	mesh.mesh = tool.commit()
-	mesh.translate(Vector3(config % 4* 2, 0, config / 4 * 2))
-	return mesh
+	var meshNode = MeshInstance3D.new()
+	P1Utils.addEditorChild(self, meshNode, "mesh" + str(config))
+	var arr = generateVerts(config)
+	var fTool = P1Utils.makeTool()
+	var wTool = P1Utils.makeTool()
+	var cTool = P1Utils.makeTool()
+	
+	for v in arr[0]:
+		fTool.add_vertex(v)
+	for v in arr[1]:
+		wTool.add_vertex(v)
+	for v in arr[2]:
+		cTool.add_vertex(v)
+		
+	fTool.index()
+	fTool.generate_normals()
+	var mesh = fTool.commit()
+	
+	var navMesh = NavigationMesh.new()
+	navMesh.create_from_mesh(mesh)
+	var navRegion = NavigationRegion3D.new()
+	navRegion.navigation_mesh = navMesh
+	P1Utils.addEditorChild(meshNode, navRegion, "nav" + str(config))
+	
+	wTool.index()
+	wTool.generate_normals()
+	mesh = wTool.commit(mesh)
+	
+	cTool.index()
+	cTool.generate_normals()
+	mesh = cTool.commit(mesh)
+	
+	meshNode.mesh = mesh
+	meshNode.translate(Vector3(config % 4* 2, 0, config / 4 * 2))
+	meshNode.create_trimesh_collision()
+		
+	return meshNode
 	
 func generateAll():
 	for i in range(get_child_count()):

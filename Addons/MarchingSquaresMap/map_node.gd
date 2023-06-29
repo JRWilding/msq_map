@@ -1,47 +1,38 @@
 @tool
 class_name MarchingSquaresMapNode
-extends Node
+extends Node3D
 
 const P1Utils = preload("res://Addons/MarchingSquaresMap/p1_utils.gd")
 const Generator = preload("res://Addons/MarchingSquaresMap/make_meshes.gd")
 
 
-@export var instance: int:
-	set(newInstance):
-		instance = newInstance
-		if get_tree() == null:
-			return
-		rebuild()
-		toPoly()
+@export var reinit: int:
+	set(newReinit):
+		reinit = newReinit
+		if get_tree() != null:
+			rebuild()
+			toPoly()
 		
 @export var image: CompressedTexture2D:
 	set(new_image):
-		print("setting new image")
 		image = new_image
-		
-		if get_tree() == null:
-			return
-		
-		rebuild()
-		toPoly()
+		if get_tree() != null:
+			rebuild()
+			toPoly()
 
 @export var mapScale: float = 1:
 	set(newMapScale):
 		mapScale = newMapScale
 		
-		if get_tree() == null:
-			return
-			
-		toPoly()
+		if get_tree() != null:
+			toPoly()
 		
 @export var wallHeight: float = 2:
 	set(new_wallHeight):
 		wallHeight = new_wallHeight
 		
-		if get_tree() == null:
-			return
-		
-		toPoly()
+		if get_tree() != null:
+			toPoly()
 
 var cellIsSolid: Array[int] = []
 var cellMSq: Array[int] = []
@@ -60,21 +51,63 @@ const msConfig = [
 	8, 4, 2, 1
 ]
 	
-func getGeneratedMeshes():
+func getGeneratedMeshes() -> Array:
 	return P1Utils.getChildrenOfType(self, MeshInstance3D)
+
+func getGeneratedNav() -> Array:
+	return P1Utils.getChildrenOfType(self, NavigationRegion3D)
 			
 func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, scale: Vector3):
 	for v in verts:
 		tool.add_vertex((v + offset) * scale)
-			
+	
+func addToWorld(tool: SurfaceTool, name: String, color: Color) -> MeshInstance3D:
+	var meshNode = MeshInstance3D.new()
+	P1Utils.addEditorChild(self, meshNode, name)
+	tool.index()
+	tool.generate_normals()
+	meshNode.mesh = tool.commit()
+	meshNode.material_overlay = StandardMaterial3D.new()
+	meshNode.material_overlay.albedo_color = color
+	meshNode.create_trimesh_collision()
+	return meshNode
+
+func populateGridMap():
+	return
+	var grid: GridMap = get_node("GridMap")
+	
+	if grid.mesh_library == null:
+		grid.mesh_library = load("res://Addons/MarchingSquaresMap/meshlib.tres")
+		
+	grid.cell_center_x = false
+	grid.cell_center_y = false
+	grid.cell_center_z = false
+	
+	grid.bake_navigation = true
+	grid.cell_size = Vector3(mapScale,1,mapScale)
+	grid.cell_scale = mapScale
+	grid.scale = Vector3(1,wallHeight,1)
+	
+	grid.rotation = Vector3(0,deg_to_rad(-90),0)
+
+	for y in range(ih):
+		for x in range(iw):
+			grid.set_cell_item(Vector3(x,0,y), cellMSq[cell(x,y)], 0)
+				
 func toPoly():
 	
+	if not Engine.is_editor_hint():
+		return
 	var oldNodes = getGeneratedMeshes()
+	oldNodes.append_array(getGeneratedNav())
 	for on in oldNodes:
 		remove_child(on)
 		
 	if image == null:
 		return
+	
+	populateGridMap()
+	#return
 	
 	if false:
 		print("  | 00 01 02 03 04 05 06 07 08")
@@ -90,13 +123,13 @@ func toPoly():
 		
 	var vMapScaleWithHeight = Vector3(mapScale,wallHeight,mapScale)
 			
-	var floorTool = P1Utils.makeTool()
-	var wallTool = P1Utils.makeTool()
-	var ceilingTool = P1Utils.makeTool()
+	var floorTool = P1Utils.makeTool(Color.DARK_GRAY)
+	var wallTool = P1Utils.makeTool(Color.DARK_SLATE_GRAY)
+	var ceilingTool = P1Utils.makeTool(Color.DIM_GRAY)
 	
 	var meshes = []
 	for i in range(16):
-		meshes.push_back(Generator.generateMesh(i))
+		meshes.push_back(Generator.generateVerts(i))
 	
 	for y in range(ih):
 		for x in range(iw):
@@ -107,22 +140,29 @@ func toPoly():
 			copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight)
 			copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight)
 			
-	var ceiling = MeshInstance3D.new()
-	P1Utils.addEditorChild(self, ceiling, "Ceiling")
-	ceiling.mesh = ceilingTool.commit()
-	ceiling.create_trimesh_collision()
+	addToWorld(ceilingTool, "Ceiling", Color.DARK_GRAY)
+	addToWorld(wallTool, "Wall", Color.DARK_SLATE_GRAY)
+	var floorNode = addToWorld(floorTool, "Floor", Color.DIM_GRAY)
 	
-	var wall = MeshInstance3D.new()
-	P1Utils.addEditorChild(self, wall, "Wall")
-	wall.mesh = wallTool.commit()
-	wall.create_trimesh_collision()
+	var floorNav = NavigationMesh.new()
+	floorNav.agent_radius = 0.5
+	floorNav.cell_size = 0.1
+	floorNav.geometry_source_group_name = "msq_nav_floor"
+	floorNav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_EXPLICIT
+	floorNode.add_to_group("msq_nav_floor")
+	floorNav.create_from_mesh(floorNode.mesh)
+	var region = NavigationRegion3D.new()
+	region.navigation_mesh = floorNav
 	
-	var floor = MeshInstance3D.new()
-	P1Utils.addEditorChild(self, floor, "Floor")
-	floor.mesh = floorTool.commit()
-	floor.create_trimesh_collision()
+	P1Utils.addEditorChild(self, region, "NavigationRegion3D")
 	
+	region.bake_navigation_mesh(true)
+			
 func rebuild():
+	
+	if not Engine.is_editor_hint():
+		return
+		
 	print("rebuilding")
 	
 	cellIsSolid = []
