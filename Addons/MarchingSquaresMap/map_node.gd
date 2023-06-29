@@ -60,9 +60,9 @@ func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3):
 	for v in verts:
 		tool.add_vertex((v + offset) * sc)
 	
-func addToWorld(tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
+func addToWorld(parent: Node, tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
-	P1Utils.addEditorChild(self, meshNode, nodeName)
+	P1Utils.addEditorChild(parent, meshNode, nodeName)
 	tool.index()
 	tool.generate_normals()
 	meshNode.mesh = tool.commit()
@@ -96,7 +96,7 @@ func toPoly():
 	
 	if not Engine.is_editor_hint() || get_tree() == null:
 		return
-	var oldNodes = getGeneratedMeshes()
+	var oldNodes = P1Utils.getChildrenOfType(self, Node3D)
 	oldNodes.append_array(getGeneratedNav())
 	for on in oldNodes:
 		remove_child(on)
@@ -126,6 +126,8 @@ func toPoly():
 	
 	var region = NavigationRegion3D.new()
 	P1Utils.addEditorChild(self, region, "NavigationRegion3D")
+	var chunks = Node3D.new()
+	P1Utils.addEditorChild(self, chunks, "Chunks")
 	
 	var chunk = 0
 	for sy in range(0, ih, chunkSize):
@@ -151,9 +153,9 @@ func toPoly():
 			print("chunk ", chunk)
 			var c = str(chunk)
 			chunk += 1
-			addToWorld(ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
-			addToWorld(wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
-			var floorNode = addToWorld(floorTool, "Floor" + c, Color.DIM_GRAY)
+			addToWorld(chunks, ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
+			addToWorld(chunks, wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
+			var floorNode = addToWorld(chunks, floorTool, "Floor" + c, Color.DIM_GRAY)
 			floorNode.add_to_group("msq_nav_floor")
 			
 	var floorNav = NavigationMesh.new()

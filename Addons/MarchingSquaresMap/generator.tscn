@@ -560,7 +560,6 @@ data = PackedVector3Array(1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1)
 
 [node name="MarchingSquaresGenerator" type="Node" parent="."]
 script = ExtResource("1_7cmbu")
-instance = 4
 
 [node name="mesh0" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 mesh = SubResource("ArrayMesh_j2a6t")
@@ -752,8 +751,3 @@ navigation_mesh = SubResource("NavigationMesh_ji5gv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh15/mesh15_col"]
 shape = SubResource("ConcavePolygonShape3D_x8a51")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 1)
-light_color = Color(0, 0.956863, 0.956863, 1)
-light_energy = 16.0
