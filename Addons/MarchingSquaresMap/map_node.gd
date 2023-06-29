@@ -14,8 +14,8 @@ const Generator = preload("res://Addons/MarchingSquaresMap/make_meshes.gd")
 			toPoly()
 		
 @export var image: CompressedTexture2D:
-	set(new_image):
-		image = new_image
+	set(newImage):
+		image = newImage
 		if get_tree() != null:
 			rebuild()
 			toPoly()
@@ -28,12 +28,18 @@ const Generator = preload("res://Addons/MarchingSquaresMap/make_meshes.gd")
 			toPoly()
 		
 @export var wallHeight: float = 2:
-	set(new_wallHeight):
-		wallHeight = new_wallHeight
+	set(newWallHeight):
+		wallHeight = newWallHeight
 		
 		if get_tree() != null:
 			toPoly()
 
+@export var chunkSize: float = 16:
+	set(newChunkSize):
+		chunkSize = newChunkSize
+		if get_tree() != null:
+			toPoly()
+			
 var cellIsSolid: Array[int] = []
 var cellMSq: Array[int] = []
 var iw: int
@@ -123,37 +129,49 @@ func toPoly():
 		
 	var vMapScaleWithHeight = Vector3(mapScale,wallHeight,mapScale)
 			
-	var floorTool = P1Utils.makeTool(Color.DARK_GRAY)
-	var wallTool = P1Utils.makeTool(Color.DARK_SLATE_GRAY)
-	var ceilingTool = P1Utils.makeTool(Color.DIM_GRAY)
-	
 	var meshes = []
 	for i in range(16):
 		meshes.push_back(Generator.generateVerts(i))
 	
-	for y in range(ih):
-		for x in range(iw):
-			var c = cellMSq[cell(x,y)]
-			var offset = Vector3(x, 0, y)
-			var cellMesh = meshes[c]
-			copyToTool(floorTool, cellMesh[0], offset, vMapScaleWithHeight)
-			copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight)
-			copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight)
+	var chunk = 0
+	for sy in range(0, ih, chunkSize):
+		for sx in range(0, iw, chunkSize):
 			
-	addToWorld(ceilingTool, "Ceiling", Color.DARK_GRAY)
-	addToWorld(wallTool, "Wall", Color.DARK_SLATE_GRAY)
-	var floorNode = addToWorld(floorTool, "Floor", Color.DIM_GRAY)
+			var floorTool = P1Utils.makeTool(Color.DARK_GRAY)
+			var wallTool = P1Utils.makeTool(Color.DARK_SLATE_GRAY)
+			var ceilingTool = P1Utils.makeTool(Color.DIM_GRAY)
 	
+			for y in range(sy, sy + chunkSize):
+				for x in range(sx, sx + chunkSize):
+					
+					if (x >= iw || y >= ih):
+						continue
+						
+					var c = cellMSq[cell(x,y)]
+					var offset = Vector3(x, 0, y)
+					var cellMesh = meshes[c]
+					copyToTool(floorTool, cellMesh[0], offset, vMapScaleWithHeight)
+					copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight)
+					copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight)
+			
+			print("chunk ", chunk)
+			var c = str(chunk)
+			chunk += 1
+			addToWorld(ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
+			addToWorld(wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
+			var floorNode = addToWorld(floorTool, "Floor" + c, Color.DIM_GRAY)
+			floorNode.add_to_group("msq_nav_floor")
+			
 	var floorNav = NavigationMesh.new()
 	floorNav.agent_radius = 0.5
 	floorNav.cell_size = 0.1
+	floorNav.cell_height = 0.01
 	floorNav.geometry_source_group_name = "msq_nav_floor"
 	floorNav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_EXPLICIT
-	floorNode.add_to_group("msq_nav_floor")
-	floorNav.create_from_mesh(floorNode.mesh)
+	
+	#floorNav.create_from_mesh(floorNode.mesh)
 	var region = NavigationRegion3D.new()
 	region.navigation_mesh = floorNav
-	
 	P1Utils.addEditorChild(self, region, "NavigationRegion3D")
 	
 	region.bake_navigation_mesh(true)
