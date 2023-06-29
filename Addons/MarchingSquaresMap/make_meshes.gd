@@ -33,9 +33,9 @@ const ul = Vector3(0.0, 1, 0.5)
 # Arrays are the triangles for floor, wall, ceiling, in order
 # (the outer array will be size=3)
 static func generateVerts(config: int) -> Array[Array]:
-	var floor = []
-	var wall = []
-	var ceiling = []
+	var fl = []
+	var wa = []
+	var ce = []
 		
 	var verts: Array[Vector3]
 	match config:
@@ -189,17 +189,17 @@ static func generateVerts(config: int) -> Array[Array]:
 		var v2 = verts[i+1]
 		var v3 = verts[i+2]
 		var y = v1.y + v2.y + v3.y
-		var arr = floor if y == 0 else ceiling if y == 3 else wall
+		var arr = fl if y == 0 else ce if y == 3 else wa
 		arr.push_back(v2)
 		arr.push_back(v3)
 		arr.push_back(v1)
 	
-	return [floor, wall, ceiling]
+	return [fl, wa, ce]
 	
 func generateNode(config: int) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
 	P1Utils.addEditorChild(self, meshNode, "mesh" + str(config))
-	var arr = generateVerts(config)
+	var arr = MarchingSquaresGenerator.generateVerts(config)
 	var fTool = P1Utils.makeTool()
 	var wTool = P1Utils.makeTool()
 	var cTool = P1Utils.makeTool()
@@ -230,7 +230,7 @@ func generateNode(config: int) -> MeshInstance3D:
 	mesh = cTool.commit(mesh)
 	
 	meshNode.mesh = mesh
-	meshNode.translate(Vector3(config % 4* 2, 0, config / 4 * 2))
+	meshNode.translate(Vector3(config % 4 * 2, 0, config / 4 * 2))
 	meshNode.create_trimesh_collision()
 		
 	return meshNode
@@ -240,21 +240,21 @@ func generateAll():
 		var c = get_child(0)
 		remove_child(c)
 		
-	var mesh0 = generateNode(0)
-	var mesh1 = generateNode(1)
-	var mesh2 = generateNode(2)
-	var mesh3 = generateNode(3)
-	var mesh4 = generateNode(4)
-	var mesh5 = generateNode(5)
-	var mesh6 = generateNode(6)
-	var mesh7 = generateNode(7)
-	var mesh8 = generateNode(8)
-	var mesh9 = generateNode(9)
-	var mesh10 = generateNode(10)
-	var mesh11 = generateNode(11)
-	var mesh12 = generateNode(12)
-	var mesh13 = generateNode(13)
-	var mesh14 = generateNode(14)
-	var mesh15 = generateNode(15)
+	var _mesh0 = generateNode(0)
+	var _mesh1 = generateNode(1)
+	var _mesh2 = generateNode(2)
+	var _mesh3 = generateNode(3)
+	var _mesh4 = generateNode(4)
+	var _mesh5 = generateNode(5)
+	var _mesh6 = generateNode(6)
+	var _mesh7 = generateNode(7)
+	var _mesh8 = generateNode(8)
+	var _mesh9 = generateNode(9)
+	var _mesh10 = generateNode(10)
+	var _mesh11 = generateNode(11)
+	var _mesh12 = generateNode(12)
+	var _mesh13 = generateNode(13)
+	var _mesh14 = generateNode(14)
+	var _mesh15 = generateNode(15)
 	
 	

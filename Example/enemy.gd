@@ -13,7 +13,7 @@ func _ready():
 func setMoveTarget(target: Vector3):
 	navAgent.set_target_position(target)
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	if (navAgent.is_navigation_finished()):
 		return
 		

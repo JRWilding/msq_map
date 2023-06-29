@@ -9,36 +9,29 @@ const Generator = preload("res://Addons/MarchingSquaresMap/make_meshes.gd")
 @export var reinit: int:
 	set(newReinit):
 		reinit = newReinit
-		if get_tree() != null:
-			rebuild()
-			toPoly()
+		rebuild()
+		toPoly()
 		
 @export var image: CompressedTexture2D:
 	set(newImage):
 		image = newImage
-		if get_tree() != null:
-			rebuild()
-			toPoly()
+		rebuild()
+		toPoly()
 
 @export var mapScale: float = 1:
 	set(newMapScale):
 		mapScale = newMapScale
-		
-		if get_tree() != null:
-			toPoly()
+		toPoly()
 		
 @export var wallHeight: float = 2:
 	set(newWallHeight):
 		wallHeight = newWallHeight
-		
-		if get_tree() != null:
-			toPoly()
+		toPoly()
 
 @export var chunkSize: float = 16:
 	set(newChunkSize):
 		chunkSize = newChunkSize
-		if get_tree() != null:
-			toPoly()
+		toPoly()
 			
 var cellIsSolid: Array[int] = []
 var cellMSq: Array[int] = []
@@ -63,13 +56,13 @@ func getGeneratedMeshes() -> Array:
 func getGeneratedNav() -> Array:
 	return P1Utils.getChildrenOfType(self, NavigationRegion3D)
 			
-func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, scale: Vector3):
+func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3):
 	for v in verts:
-		tool.add_vertex((v + offset) * scale)
+		tool.add_vertex((v + offset) * sc)
 	
-func addToWorld(tool: SurfaceTool, name: String, color: Color) -> MeshInstance3D:
+func addToWorld(tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
-	P1Utils.addEditorChild(self, meshNode, name)
+	P1Utils.addEditorChild(self, meshNode, nodeName)
 	tool.index()
 	tool.generate_normals()
 	meshNode.mesh = tool.commit()
@@ -102,7 +95,7 @@ func populateGridMap():
 				
 func toPoly():
 	
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() || get_tree() == null:
 		return
 	var oldNodes = getGeneratedMeshes()
 	oldNodes.append_array(getGeneratedNav())
@@ -164,8 +157,8 @@ func toPoly():
 			
 	var floorNav = NavigationMesh.new()
 	floorNav.agent_radius = 0.5
-	floorNav.cell_size = 0.1
-	floorNav.cell_height = 0.01
+	floorNav.cell_size = 0.05
+	floorNav.cell_height = 0.1
 	floorNav.geometry_source_group_name = "msq_nav_floor"
 	floorNav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_EXPLICIT
 	
@@ -178,7 +171,7 @@ func toPoly():
 			
 func rebuild():
 	
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() || get_tree() == null:
 		return
 		
 	print("rebuilding")
