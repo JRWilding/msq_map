@@ -9,8 +9,6 @@ class_name MarchingSquaresGenerator extends Node
 		instance = newInstance
 		generateAll()
 
-const P1Utils = preload("res://Addons/MarchingSquaresMap/p1_utils.gd")
-
 const dtl = Vector3(0, 0, 0)
 const dtr = Vector3(1, 0, 0)
 const dbr = Vector3(1, 0, 1)

@@ -2,10 +2,6 @@
 class_name MarchingSquaresMapNode
 extends Node3D
 
-const P1Utils = preload("res://Addons/MarchingSquaresMap/p1_utils.gd")
-const Generator = preload("res://Addons/MarchingSquaresMap/make_meshes.gd")
-
-
 @export var reinit: int:
 	set(newReinit):
 		reinit = newReinit
@@ -61,7 +57,7 @@ func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3) -
 		
 	return not verts.is_empty()
 	
-func addToWorld(parent: Node, tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
+func addToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
 	P1Utils.addEditorChild(parent, meshNode, nodeName)
 	tool.index()
@@ -70,6 +66,8 @@ func addToWorld(parent: Node, tool: SurfaceTool, nodeName: String, color: Color)
 	meshNode.material_overlay = StandardMaterial3D.new()
 	meshNode.material_overlay.albedo_color = color
 	meshNode.create_trimesh_collision()
+	var col: StaticBody3D = meshNode.get_child(0)
+	col.collision_layer = colLayer
 	return meshNode
 
 func populateGridMap():
@@ -98,10 +96,11 @@ func toPoly():
 	if not Engine.is_editor_hint() || get_tree() == null:
 		return
 		
+	
 	var oldNodes = [
-		get_node("Chunks"),
-		get_node("NavigationRegion3D"),
-		get_node("GridMap")
+		get_node("Chunks") if has_node("Chunks") else null,
+		get_node("NavigationRegion3D") if has_node("NavigationRegion3D") else null,
+		get_node("GridMap") if has_node("GridMap") else null,
 	]
 	for on in oldNodes:
 		if on != null:
@@ -130,7 +129,7 @@ func toPoly():
 			
 	var meshes = []
 	for i in range(16):
-		meshes.push_back(Generator.generateVerts(i))
+		meshes.push_back(MarchingSquaresGenerator.generateVerts(i))
 	
 	var navRegion = NavigationRegion3D.new()
 	P1Utils.addEditorChild(self, navRegion, "NavigationRegion3D")
@@ -165,11 +164,11 @@ func toPoly():
 			var c = str(chunk)
 			chunk += 1
 			if hasCeiling:
-				addToWorld(chunks, ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
+				addToWorld(chunks, 3, ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
 			if hasWall:
-				addToWorld(chunks, wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
+				addToWorld(chunks, 2, wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
 			if hasFloor:
-				var floorNode = addToWorld(chunks, floorTool, "Floor" + c, Color.DIM_GRAY)
+				var floorNode = addToWorld(chunks, 1, floorTool, "Floor" + c, Color.DIM_GRAY)
 				floorNode.add_to_group("msq_nav_floor")
 			
 	var floorNav = NavigationMesh.new()

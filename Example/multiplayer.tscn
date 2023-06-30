@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4ikqj6b0x5hu"]
+
+[ext_resource type="Script" path="res://Example/multiplayer.gd" id="1_pc4nv"]
+
+[node name="multiplayer" type="Node"]
+script = ExtResource("1_pc4nv")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 16.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Net" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Options" type="HBoxContainer" parent="UI/Net"]
+layout_mode = 2
+
+[node name="Host" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_mask = 7
+text = "Host"
+
+[node name="Connect" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Join"
+
+[node name="Remote" type="LineEdit" parent="UI/Net/Options"]
+layout_mode = 2
+text = "127.0.0.1"
+
+[node name="World" type="Node" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Example/test.tscn")
+spawn_path = NodePath("../World")
+spawn_limit = 1
+
+[connection signal="pressed" from="UI/Net/Options/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="UI/Net/Options/Connect" to="." method="_on_connect_pressed"]

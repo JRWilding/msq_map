@@ -11,13 +11,21 @@ config_version=5
 [application]
 
 config/name="MarchingSquares"
-run/main_scene="res://Example/test.tscn"
+run/main_scene="res://Example/multiplayer.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/MarchingSquaresMap/plugin.cfg")
+
+[layer_names]
+
+3d_physics/layer_1="Floor"
+3d_physics/layer_2="Wall"
+3d_physics/layer_3="Ceiling"
+3d_physics/layer_4="Players"
+3d_physics/layer_5="Enemies"
 
 [physics]
 

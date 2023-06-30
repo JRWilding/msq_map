@@ -7,7 +7,7 @@ extends RigidBody3D
 func _ready():
 	navAgent.velocity_computed.connect(Callable(_on_velocity_computed))
 	
-	var target = get_parent().get_node("Target")
+	var target = get_node("Target")
 	if target != null:
 		call_deferred("setMoveTarget", target.position)
 		
