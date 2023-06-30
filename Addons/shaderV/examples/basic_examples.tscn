@@ -1,6 +1,6 @@
 [gd_scene load_steps=704 format=3 uid="uid://c0y4dh3a6qrur"]
 
-[ext_resource type="Texture2D" uid="uid://dukgbairam5vc" path="res://Addons/shaderV/shaderV_icon.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dukgbairam5vc" path="res://addons/shaderV/shaderV_icon.png" id="1"]
 [ext_resource type="Script" path="res://addons/shaderV/uv/tilingNoffset.gd" id="2"]
 [ext_resource type="Script" path="res://addons/shaderV/uv/pixelate.gd" id="3"]
 [ext_resource type="Script" path="res://addons/shaderV/uv/lensDistortion.gd" id="4"]
@@ -54,7 +54,7 @@
 [ext_resource type="Script" path="res://addons/shaderV/rgba/noise/worley2x2x2.gd" id="53"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/noise/worley3d.gd" id="54"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/blackNwhite.gd" id="56"]
-[ext_resource type="Texture2D" uid="uid://ds4rnuhypjs8a" path="res://Addons/shaderV/examples/godot_logo.png" id="57"]
+[ext_resource type="Texture2D" uid="uid://ds4rnuhypjs8a" path="res://addons/shaderV/examples/godot_logo.png" id="57"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/blendAwithB.gd" id="58"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/bloom.gd" id="59"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/chromaticAberration.gd" id="60"]

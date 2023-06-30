@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://cg3hksjxygofp"]
 
-[ext_resource type="Script" path="res://Addons/MarchingSquaresMap/Example/player.gd" id="1_1mpbv"]
-[ext_resource type="Script" path="res://Addons/MarchingSquaresMap/Example/player_input.gd" id="2_1uqlb"]
-[ext_resource type="Script" path="res://Addons/FreelookCamera/free_look_camera.gd" id="3_dgrti"]
+[ext_resource type="Script" path="res://addons/msq_map/example/player.gd" id="1_1mpbv"]
+[ext_resource type="Script" path="res://addons/msq_map/example/player_input.gd" id="2_1uqlb"]
+[ext_resource type="Script" path="res://addons/FreelookCamera/free_look_camera.gd" id="3_dgrti"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lqns4"]
 properties/0/path = NodePath(".:player")

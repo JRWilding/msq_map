@@ -36,7 +36,7 @@ func start_game():
 	$UI.hide()
 	
 	if multiplayer.is_server():
-		change_level.call_deferred(load("res://Addons/MarchingSquaresMap/Example/level.tscn"))
+		change_level.call_deferred(load("res://addons/msq_map/example/level.tscn"))
 		
 func change_level(scene: PackedScene):
 	var level = $World
@@ -50,4 +50,4 @@ func _input(event):
 	if not multiplayer.is_server():
 		return
 	if event.is_action("ui_home") and Input.is_action_just_pressed("ui_home"):
-		change_level.call_deferred(load("res://Addons/MarchingSquaresMap/Example/level.tscn"))
+		change_level.call_deferred(load("res://addons/msq_map/example/level.tscn"))

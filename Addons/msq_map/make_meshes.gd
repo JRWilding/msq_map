@@ -26,6 +26,25 @@ const ut = Vector3(0.5, 1, 0.0)
 const ur = Vector3(1.0, 1, 0.5)
 const ub = Vector3(0.5, 1, 1.0)
 const ul = Vector3(0.0, 1, 0.5)
+
+const uvtl = Vector2(0, 0)
+const uvtr = Vector2(1, 0)
+const uvbr = Vector2(1, 1)
+const uvbl = Vector2(0, 1)
+const uvt = Vector2(0.5, 0.0)
+const uvr = Vector2(1.0, 0.5)
+const uvb = Vector2(0.5, 1.0)
+const uvl = Vector2(0.0, 0.5)
+
+static func writeToTool(arr: Array, tool: SurfaceTool):
+	for v in arr:
+		tool.set_uv(Vector2(v.x, v.z))		
+		tool.add_vertex(v)
+	
+static func finishTool(tool: SurfaceTool):	
+	tool.index()
+	tool.generate_normals()
+	tool.generate_tangents()
 	
 # returns an Array[Array[Vector3]] for 1 cell with the given marching square config
 # Arrays are the triangles for floor, wall, ceiling, in order
@@ -202,29 +221,21 @@ func generateNode(config: int) -> MeshInstance3D:
 	var wTool = P1Utils.makeTool()
 	var cTool = P1Utils.makeTool()
 	
-	for v in arr[0]:
-		fTool.add_vertex(v)
-	for v in arr[1]:
-		wTool.add_vertex(v)
-	for v in arr[2]:
-		cTool.add_vertex(v)
-		
-	fTool.index()
-	fTool.generate_normals()
+	MarchingSquaresGenerator.writeToTool(arr[0], fTool)
+	MarchingSquaresGenerator.writeToTool(arr[1], wTool)
+	MarchingSquaresGenerator.writeToTool(arr[2], cTool)
+			
+	MarchingSquaresGenerator.finishTool(fTool)
 	var mesh = fTool.commit()
-	
 	var navMesh = NavigationMesh.new()
 	navMesh.create_from_mesh(mesh)
 	var navRegion = NavigationRegion3D.new()
 	navRegion.navigation_mesh = navMesh
 	P1Utils.addEditorChild(meshNode, navRegion, "nav" + str(config))
 	
-	wTool.index()
-	wTool.generate_normals()
+	MarchingSquaresGenerator.finishTool(wTool)
 	mesh = wTool.commit(mesh)
-	
-	cTool.index()
-	cTool.generate_normals()
+	MarchingSquaresGenerator.finishTool(cTool)
 	mesh = cTool.commit(mesh)
 	
 	meshNode.mesh = mesh

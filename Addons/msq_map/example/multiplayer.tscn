@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://r2ug68oi6107"]
 
-[ext_resource type="Script" path="res://Addons/MarchingSquaresMap/Example/multiplayer.gd" id="1_p57w1"]
+[ext_resource type="Script" path="res://addons/msq_map/example/multiplayer.gd" id="1_hsuvm"]
 
 [node name="multiplayer" type="Node"]
-script = ExtResource("1_p57w1")
+script = ExtResource("1_hsuvm")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -39,7 +39,7 @@ text = "127.0.0.1"
 [node name="World" type="Node" parent="."]
 
 [node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Addons/MarchingSquaresMap/Example/level.tscn")
+_spawnable_scenes = PackedStringArray("res://addons/msq_map/example/level.tscn")
 spawn_path = NodePath("../World")
 spawn_limit = 1
 

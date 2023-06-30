@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://bu78h4uuk0rbn"]
+
+[ext_resource type="Script" path="res://addons/msq_map/example/level.gd" id="1_capeq"]
+[ext_resource type="Script" path="res://addons/msq_map/example/enemy.gd" id="4_ioawj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pimyw"]
+albedo_color = Color(0.184314, 0.486275, 0.286275, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kjwnh"]
+material = SubResource("StandardMaterial3D_pimyw")
+height = 0.2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ap4ef"]
+margin = 0.025
+height = 0.2
+radius = 0.475
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_iary6"]
+properties/0/path = NodePath("RigidBody3D:position")
+properties/0/spawn = false
+properties/0/sync = true
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_capeq")
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Enemies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.2, 6.2)
+linear_velocity = Vector3(1, 0, 0)
+script = ExtResource("4_ioawj")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Enemies/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+light_energy = 7.083
+light_specular = 0.083
+shadow_enabled = true
+omni_range = 6.0
+omni_attenuation = 0.757858
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemies/RigidBody3D"]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+path_max_distance = 2.51
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.741176, 0.184314, 0.494118, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemies/RigidBody3D"]
+mesh = SubResource("CylinderMesh_kjwnh")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemies/RigidBody3D"]
+shape = SubResource("CylinderShape3D_ap4ef")
+
+[node name="Target" type="Node3D" parent="Enemies/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.916, -0.2, -30.9879)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Enemies"]
+replication_config = SubResource("SceneReplicationConfig_iary6")
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://addons/msq_map/example/player.tscn")
+spawn_path = NodePath("../Players")

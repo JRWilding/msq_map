@@ -52,19 +52,18 @@ const msConfig = [
 ]
 				
 func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3) -> bool:
+	var verts2 = []
 	for v in verts:
-		tool.add_vertex((v + offset) * sc)
-		
+		verts2.push_back((v + offset) * sc)
+	MarchingSquaresGenerator.writeToTool(verts2, tool)
 	return not verts.is_empty()
 	
-func addToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, color: Color) -> MeshInstance3D:
+func addToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, mat: Material) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
 	P1Utils.addEditorChild(parent, meshNode, nodeName)
-	tool.index()
-	tool.generate_normals()
+	MarchingSquaresGenerator.finishTool(tool)
 	meshNode.mesh = tool.commit()
-	meshNode.material_overlay = StandardMaterial3D.new()
-	meshNode.material_overlay.albedo_color = color
+	meshNode.material_overlay = mat
 	meshNode.create_trimesh_collision()
 	var col: StaticBody3D = meshNode.get_child(0)
 	col.collision_layer = colLayer
@@ -74,7 +73,7 @@ func populateGridMap():
 	var grid: GridMap = GridMap.new()
 	P1Utils.addEditorChild(self, grid, "GridMap")
 		
-	grid.mesh_library = load("res://Addons/MarchingSquaresMap/meshlib.tres")
+	grid.mesh_library = load("res://addons/msq_map/meshlib.tres")
 		
 	grid.cell_center_x = false
 	grid.cell_center_y = false
@@ -164,11 +163,19 @@ func toPoly():
 			var c = str(chunk)
 			chunk += 1
 			if hasCeiling:
-				addToWorld(chunks, 3, ceilingTool, "Ceiling" + c, Color.DARK_GRAY)
+#				var mat = StandardMaterial3D.new()
+#				mat.albedo_color = Color.DARK_GRAY
+				var mat = ShaderMaterial.new()
+				mat.shader = preload("res://addons/msq_map/example/ceiling_shader.tres")
+				addToWorld(chunks, 3, ceilingTool, "Ceiling" + c, mat)
 			if hasWall:
-				addToWorld(chunks, 2, wallTool, "Wall" + c, Color.DARK_SLATE_GRAY)
+				var mat = StandardMaterial3D.new()
+				mat.albedo_color = Color.DARK_SLATE_GRAY
+				addToWorld(chunks, 2, wallTool, "Wall" + c, mat)
 			if hasFloor:
-				var floorNode = addToWorld(chunks, 1, floorTool, "Floor" + c, Color.DIM_GRAY)
+				var mat = StandardMaterial3D.new()
+				mat.albedo_color = Color.DIM_GRAY
+				var floorNode = addToWorld(chunks, 1, floorTool, "Floor" + c, mat)
 				floorNode.add_to_group("msq_nav_floor")
 			
 	var floorNav = NavigationMesh.new()

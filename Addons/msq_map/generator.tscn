@@ -1,30 +1,11 @@
-[gd_scene load_steps=60 format=3 uid="uid://cj0uw7uqd1sl3"]
+[gd_scene load_steps=50 format=3 uid="uid://dpj4fgi5emper"]
 
-[ext_resource type="Shader" uid="uid://boeyymbfjq5vl" path="res://Addons/MarchingSquaresMap/Example/floor_shader.tres" id="1_a4orq"]
-[ext_resource type="Script" path="res://Addons/FreelookCamera/free_look_camera.gd" id="1_d1ccy"]
-[ext_resource type="Script" path="res://Addons/MarchingSquaresMap/make_meshes.gd" id="4_1t8vg"]
-[ext_resource type="Shader" path="res://Example/ceiling_shader.tres" id="5_hy7gc"]
+[ext_resource type="Script" path="res://addons/msq_map/make_meshes.gd" id="1_7cmbu"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ycu2"]
-render_priority = 0
-shader = ExtResource("1_a4orq")
-
-[sub_resource type="BoxMesh" id="BoxMesh_ehkqn"]
-material = SubResource("ShaderMaterial_1ycu2")
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3sbt3"]
-points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i0w4j"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_750ly"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_yl4be"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_n33a4"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_j2a6t"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1.00001, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -33,17 +14,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_pjrpa"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_8gp2c"]
 vertices = PackedVector3Array(1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 2, 1)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1ymaj"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_x8cpd"]
 data = PackedVector3Array(1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_lstyl"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_sdwxq"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1.00001, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0, 0, 0, 4, 0, 3, 0),
@@ -52,7 +33,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0.5, 0.50001, 1.00001, 0.50001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -61,7 +42,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 191, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 191)
 }, {
 "aabb": AABB(0, 1, 0.5, 0.50001, 1.00136e-05, 0.50001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -70,17 +51,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_kch4i"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_u5m4j"]
 vertices = PackedVector3Array(1, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1, 1, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1), PackedInt32Array(0, 4, 3)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_rndyd"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d1aod"]
 data = PackedVector3Array(1, 0, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0.5, 0, 1, 0, 0, 0.5, 1, 0, 0, 1, 0, 1, 0.5, 0, 1, 0.5, 1, 1, 0, 1, 0.5, 0.5, 0, 1, 0, 0, 0.5, 0.5, 0, 1, 0, 1, 0.5, 0.5, 1, 1, 0, 1, 1, 0, 1, 0.5)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_kiq0l"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_4dmux"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0, 0, 0, 4, 0, 3, 0),
@@ -89,7 +70,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0.5, 0, 0.5, 0.50001, 1.00001, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -98,7 +79,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 255, 191, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 255, 191, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 255, 191)
 }, {
 "aabb": AABB(0.5, 1, 0.5, 0.50001, 1.00136e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -107,17 +88,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_n0ni0"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_d1icr"]
 vertices = PackedVector3Array(0, 0, 0, 0.5, 0, 1, 0, 0, 1, 1, 0, 0.5, 1, 0, 0)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1), PackedInt32Array(0, 4, 3)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_68d2s"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d783e"]
 data = PackedVector3Array(0, 0, 0, 0.5, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0.5, 1, 1, 0.5, 0.5, 1, 1, 1, 0, 0.5, 0.5, 0, 1, 1, 0, 0.5, 0.5, 1, 1, 1, 1, 0.5, 1, 1, 1, 0.5, 1, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_2lruh"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_0yq4d"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1.00001, 1e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
@@ -126,7 +107,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0.5, 1.00001, 1.00001, 1.00136e-05),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -135,7 +116,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 255)
 }, {
 "aabb": AABB(0, 1, 0.5, 1.00001, 1.00136e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
@@ -144,17 +125,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_jf7i5"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_ojusm"]
 vertices = PackedVector3Array(1, 0, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0.5)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o2x2q"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q6egc"]
 data = PackedVector3Array(1, 0, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 1, 0, 0.5, 0, 0, 0.5, 1, 1, 0.5, 0, 1, 0.5, 1, 0, 0.5, 0, 0, 0.5, 1, 0, 0.5, 0, 1, 0.5, 1, 1, 0.5, 0, 1, 1, 0, 1, 0.5, 1, 1, 0.5, 1, 1, 1, 0, 1, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ev3mw"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_pohbk"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0, 4, 0, 1, 0, 3, 0),
@@ -163,7 +144,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0.5, 0, 0, 0.5, 1.00001, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -172,7 +153,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 63, 255, 127, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 63, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 63, 255, 127, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 63, 255, 127)
 }, {
 "aabb": AABB(0.5, 1, 0, 0.50001, 1.00136e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -181,17 +162,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_1qarc"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_s0s3p"]
 vertices = PackedVector3Array(0.5, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1), PackedInt32Array(4, 1, 3)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e85bv"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_letp6"]
 data = PackedVector3Array(0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 1, 0, 0.5, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0.5, 0.5, 1, 0, 1, 1, 0.5, 0.5, 0, 0, 1, 0, 0.5, 0.5, 0, 0, 1, 1, 0.5, 1, 1, 0, 1, 1, 0.5, 0.5, 1, 0)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ur7hm"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_14nse"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
@@ -200,7 +181,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0, 1, 1.00001, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 4, 0, 5, 0, 6, 0, 7, 0, 6, 0, 5, 0),
@@ -209,7 +190,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 255, 191, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 255, 191, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 191, 255, 127, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 191, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 191, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 191, 255, 127)
 }, {
 "aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 4, 0, 3, 0, 1, 0, 4, 0, 5, 0, 3, 0),
@@ -218,17 +199,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_tcs0q"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_o6lhx"]
 vertices = PackedVector3Array(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 1, 0.5, 0, 1, 1, 0, 0.5)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r07dq"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d2con"]
 data = PackedVector3Array(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 1, 0.5, 0, 1, 1, 0, 0.5, 0.5, 1, 0, 0, 1, 0.5, 0.5, 0, 0, 0, 0, 0.5, 0.5, 0, 0, 0, 1, 0.5, 1, 1, 0.5, 1, 0, 0.5, 0.5, 1, 1, 0.5, 0, 1, 0.5, 1, 1, 1, 0, 0.5, 1, 1, 0, 1, 1, 0.5, 0.5, 1, 0, 0, 1, 0.5, 0.5, 1, 0, 1, 1, 0.5, 0.5, 1, 1, 0, 1, 0.5, 1, 1, 0.5, 0.5, 1, 1, 0, 1, 1, 0, 1, 0.5)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_mgyow"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_2cqrc"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 0.50001, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
@@ -237,7 +218,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0.5, 0, 0, 1.00136e-05, 1, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -246,7 +227,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 255, 127)
 }, {
 "aabb": AABB(0.5, 1, 0, 0.50001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
@@ -255,17 +236,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_uwtjh"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_tqime"]
 vertices = PackedVector3Array(0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_42bd4"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dwc5p"]
 data = PackedVector3Array(0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0.5, 0, 1, 0, 0, 1, 0.5, 0, 0, 0.5, 1, 0, 0.5, 0, 1, 0.5, 1, 1, 0.5, 0, 1, 0.5, 1, 0, 1, 1, 0, 0.5, 1, 1, 0.5, 1, 0, 1, 1, 0, 1, 1, 1, 0.5, 1, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_f44mi"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_g81un"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 0.50001, 1e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -274,7 +255,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0, 0.50001, 1, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -283,7 +264,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 0, 0, 255, 191)
 }, {
 "aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 4, 0, 3, 0, 1, 0),
@@ -292,17 +273,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_4euu2"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_xfb4d"]
 vertices = PackedVector3Array(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0)
 polygons = [PackedInt32Array(0, 1, 2)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ujbih"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1akva"]
 data = PackedVector3Array(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0.5, 1, 0, 0, 0, 0.5, 0, 1, 0.5, 0, 0, 0.5, 0.5, 1, 0, 1, 1, 0, 1, 1, 1, 0.5, 1, 0, 0, 1, 0.5, 0.5, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0.5, 1, 1, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_fwb11"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_r8sxm"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1.00001, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 4, 0, 3, 0, 1, 0),
@@ -311,7 +292,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0, 0.5, 1.00001, 0.50001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -320,7 +301,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 191, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 191, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 191, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 191, 255, 127)
 }, {
 "aabb": AABB(0, 1, 0, 0.50001, 1.00136e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -329,17 +310,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_1i77u"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_qru3u"]
 vertices = PackedVector3Array(1, 0, 0, 1, 0, 1, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 2, 1), PackedInt32Array(4, 3, 1)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r2764"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_w4gw5"]
 data = PackedVector3Array(1, 0, 0, 1, 0, 1, 0.5, 0, 0, 0, 0, 0.5, 0.5, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0.5, 1, 0, 1, 0, 1, 0.5, 0.5, 1, 0, 0, 0, 0.5, 0.5, 0, 0, 0, 0, 0.5, 0.5, 1, 0, 0.5, 1, 0, 0, 1, 0.5, 0, 1, 0)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_o1p7m"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_xk5d1"]
 _surfaces = [{
 "aabb": AABB(0.5, 0, 0, 0.50001, 1e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -348,7 +329,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0.5, 0, 0, 1.00136e-05, 1, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -357,7 +338,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 255, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 255, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 127)
 }, {
 "aabb": AABB(0, 1, 0, 0.50001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -366,17 +347,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_wrndq"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_ptb2j"]
 vertices = PackedVector3Array(1, 0, 0, 1, 0, 1, 0.5, 0, 0, 0.5, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 2, 1)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6jt20"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jxaf3"]
 data = PackedVector3Array(1, 0, 0, 1, 0, 1, 0.5, 0, 0, 0.5, 0, 1, 0.5, 0, 0, 1, 0, 1, 0.5, 0, 0, 0.5, 0, 1, 0.5, 1, 0, 0.5, 1, 1, 0.5, 1, 0, 0.5, 0, 1, 0.5, 1, 0, 0.5, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0.5, 1, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_vu8nf"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_s13jk"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0, 1, 1e-05, 1.00001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
@@ -385,7 +366,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0, 1, 1.00001, 1.00001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 4, 0, 5, 0, 6, 0, 7, 0, 6, 0, 5, 0),
@@ -394,7 +375,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 63, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 63, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 63, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 63, 255, 127, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 191, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 191, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 191)
 }, {
 "aabb": AABB(0, 1, 0, 1, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0, 4, 0, 5, 0, 3, 0, 1, 0, 3, 0, 5, 0),
@@ -403,21 +384,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_bdd4d"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_qcycs"]
 vertices = PackedVector3Array(0.5, 0, 1, 0, 0, 1, 0, 0, 0.5, 1, 0, 0, 1, 0, 0.5, 0.5, 0, 0)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pvupf"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0xdcb"]
 data = PackedVector3Array(0.5, 0, 1, 0, 0, 1, 0, 0, 0.5, 1, 0, 0, 1, 0, 0.5, 0.5, 0, 0, 0.5, 1, 1, 0.5, 0, 1, 0, 1, 0.5, 0, 0, 0.5, 0, 1, 0.5, 0.5, 0, 1, 1, 1, 0.5, 0.5, 1, 0, 1, 0, 0.5, 0.5, 0, 0, 1, 0, 0.5, 0.5, 1, 0, 0.5, 1, 0, 0, 1, 0.5, 0, 1, 0, 0.5, 1, 0, 1, 1, 0.5, 0, 1, 0.5, 1, 1, 1, 0.5, 1, 1, 1, 1, 0.5, 0, 1, 0.5, 1, 1, 0.5, 0.5, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fohg3"]
-render_priority = 0
-shader = ExtResource("5_hy7gc")
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_hkemf"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_m5x7d"]
 _surfaces = [{
 "aabb": AABB(0.5, 0, 0, 0.50001, 1e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -426,7 +403,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0.5, 0, 0, 0.5, 1.00001, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -435,27 +412,26 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 191)
 }, {
 "aabb": AABB(0, 1, 0, 1, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0, 4, 0, 1, 0, 3, 0),
-"material": SubResource("ShaderMaterial_fohg3"),
 "primitive": 3,
 "vertex_count": 5,
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_jmp81"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_4qbpn"]
 vertices = PackedVector3Array(1, 0, 0, 1, 0, 0.5, 0.5, 0, 0)
 polygons = [PackedInt32Array(0, 1, 2)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ugcwo"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sqo54"]
 data = PackedVector3Array(1, 0, 0, 1, 0, 0.5, 0.5, 0, 0, 0.5, 1, 0, 0.5, 0, 0, 1, 1, 0.5, 1, 0, 0.5, 1, 1, 0.5, 0.5, 0, 0, 0.5, 1, 0, 0, 1, 1, 0, 1, 0, 0.5, 1, 0, 1, 1, 0.5, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0.5)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_1atuy"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_maifr"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0.5, 1, 1e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -464,7 +440,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0.5, 1.00001, 1, 1.00136e-05),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -473,7 +449,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 127, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 127)
 }, {
 "aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
@@ -482,17 +458,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_sujeh"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_yxba7"]
 vertices = PackedVector3Array(0, 0, 0.5, 1, 0, 0.5, 0, 0, 1, 1, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 2, 1)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ppkc0"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_kdr20"]
 data = PackedVector3Array(0, 0, 0.5, 1, 0, 0.5, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0.5, 1, 0, 0.5, 0, 0, 0.5, 1, 1, 0.5, 0, 1, 0.5, 1, 1, 0.5, 0, 0, 0.5, 1, 1, 0, 0, 1, 0.5, 0, 1, 0, 1, 1, 0, 1, 1, 0.5, 0, 1, 0.5)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_chsoh"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_p70i0"]
 _surfaces = [{
 "aabb": AABB(0.5, 0, 0.5, 0.50001, 1e-05, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -501,7 +477,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0.5, 0, 0.5, 0.50001, 1.00001, 0.5),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -510,7 +486,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 191, 255, 127, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 191, 255, 127, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 191, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 191, 255, 127)
 }, {
 "aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 3, 0, 4, 0, 2, 0),
@@ -519,17 +495,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_14dno"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_rrjp1"]
 vertices = PackedVector3Array(1, 0, 0.5, 1, 0, 1, 0.5, 0, 1)
 polygons = [PackedInt32Array(0, 1, 2)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0kfug"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_i2bv8"]
 data = PackedVector3Array(1, 0, 0.5, 1, 0, 1, 0.5, 0, 1, 1, 1, 0.5, 1, 0, 0.5, 0.5, 1, 1, 0.5, 0, 1, 0.5, 1, 1, 1, 0, 0.5, 1, 1, 0, 1, 1, 0.5, 0, 1, 0, 0.5, 1, 1, 0, 1, 0, 1, 1, 0.5, 0.5, 1, 1, 0, 1, 1, 0, 1, 0)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_1lya3"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_c7mp1"]
 _surfaces = [{
 "aabb": AABB(0, 0, 0.5, 0.50001, 1e-05, 0.50001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 3,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
@@ -538,7 +514,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 255)
 }, {
 "aabb": AABB(0, 0, 0.5, 0.50001, 1.00001, 0.50001),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0),
@@ -547,7 +523,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 63, 255, 127, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 63, 255, 127, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 63, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 63, 255, 127)
 }, {
 "aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 9,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0, 0, 0, 4, 0, 3, 0),
@@ -556,17 +532,17 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_anbh8"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_qkrds"]
 vertices = PackedVector3Array(0.5, 0, 1, 0, 0, 1, 0, 0, 0.5)
 polygons = [PackedInt32Array(0, 1, 2)]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mnbv5"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4d7rc"]
 data = PackedVector3Array(0.5, 0, 1, 0, 0, 1, 0, 0, 0.5, 0.5, 1, 1, 0.5, 0, 1, 0, 1, 0.5, 0, 0, 0.5, 0, 1, 0.5, 0.5, 0, 1, 1, 1, 0, 0, 1, 0.5, 0, 1, 0, 1, 1, 0, 0.5, 1, 1, 0, 1, 0.5, 1, 1, 0, 1, 1, 1, 0.5, 1, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_nv1bl"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_pvlmy"]
 _surfaces = [{
 "aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": 4123,
 "index_count": 6,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 0),
@@ -575,231 +551,203 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 255, 127, 255, 255, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 127, 255, 255)
 }]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_wvk3r"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_ji5gv"]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_eaf61"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_x8a51"]
 data = PackedVector3Array(1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1)
 
-[node name="Node3D" type="Node3D"]
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-mesh = SubResource("BoxMesh_ehkqn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("ConvexPolygonShape3D_3sbt3")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_i0w4j")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.258819, -0.482963, 0.836516, 0, 0.866025, 0.5, -0.965926, 0.12941, -0.224144, 8.7, 2.6, 4.2)
-script = ExtResource("1_d1ccy")
-
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-mesh = SubResource("CylinderMesh_750ly")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-shape = SubResource("CylinderShape3D_yl4be")
+[node name="generator" type="Node3D"]
 
 [node name="MarchingSquaresGenerator" type="Node" parent="."]
-script = ExtResource("4_1t8vg")
-instance = 1
+script = ExtResource("1_7cmbu")
 
 [node name="mesh0" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
-mesh = SubResource("ArrayMesh_n33a4")
+mesh = SubResource("ArrayMesh_j2a6t")
 
 [node name="nav0" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh0"]
-navigation_mesh = SubResource("NavigationMesh_pjrpa")
+navigation_mesh = SubResource("NavigationMesh_8gp2c")
 
 [node name="mesh0_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh0/mesh0_col"]
-shape = SubResource("ConcavePolygonShape3D_1ymaj")
+shape = SubResource("ConcavePolygonShape3D_x8cpd")
 
 [node name="mesh1" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-mesh = SubResource("ArrayMesh_lstyl")
+mesh = SubResource("ArrayMesh_sdwxq")
 
 [node name="nav1" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh1"]
-navigation_mesh = SubResource("NavigationMesh_kch4i")
+navigation_mesh = SubResource("NavigationMesh_u5m4j")
 
 [node name="mesh1_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh1/mesh1_col"]
-shape = SubResource("ConcavePolygonShape3D_rndyd")
+shape = SubResource("ConcavePolygonShape3D_d1aod")
 
 [node name="mesh2" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
-mesh = SubResource("ArrayMesh_kiq0l")
+mesh = SubResource("ArrayMesh_4dmux")
 
 [node name="nav2" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh2"]
-navigation_mesh = SubResource("NavigationMesh_n0ni0")
+navigation_mesh = SubResource("NavigationMesh_d1icr")
 
 [node name="mesh2_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh2/mesh2_col"]
-shape = SubResource("ConcavePolygonShape3D_68d2s")
+shape = SubResource("ConcavePolygonShape3D_d783e")
 
 [node name="mesh3" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
-mesh = SubResource("ArrayMesh_2lruh")
+mesh = SubResource("ArrayMesh_0yq4d")
 
 [node name="nav3" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh3"]
-navigation_mesh = SubResource("NavigationMesh_jf7i5")
+navigation_mesh = SubResource("NavigationMesh_ojusm")
 
 [node name="mesh3_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh3/mesh3_col"]
-shape = SubResource("ConcavePolygonShape3D_o2x2q")
+shape = SubResource("ConcavePolygonShape3D_q6egc")
 
 [node name="mesh4" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
-mesh = SubResource("ArrayMesh_ev3mw")
+mesh = SubResource("ArrayMesh_pohbk")
 
 [node name="nav4" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh4"]
-navigation_mesh = SubResource("NavigationMesh_1qarc")
+navigation_mesh = SubResource("NavigationMesh_s0s3p")
 
 [node name="mesh4_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh4"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh4/mesh4_col"]
-shape = SubResource("ConcavePolygonShape3D_e85bv")
+shape = SubResource("ConcavePolygonShape3D_letp6")
 
 [node name="mesh5" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
-mesh = SubResource("ArrayMesh_ur7hm")
+mesh = SubResource("ArrayMesh_14nse")
 
 [node name="nav5" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh5"]
-navigation_mesh = SubResource("NavigationMesh_tcs0q")
+navigation_mesh = SubResource("NavigationMesh_o6lhx")
 
 [node name="mesh5_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh5"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh5/mesh5_col"]
-shape = SubResource("ConcavePolygonShape3D_r07dq")
+shape = SubResource("ConcavePolygonShape3D_d2con")
 
 [node name="mesh6" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
-mesh = SubResource("ArrayMesh_mgyow")
+mesh = SubResource("ArrayMesh_2cqrc")
 
 [node name="nav6" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh6"]
-navigation_mesh = SubResource("NavigationMesh_uwtjh")
+navigation_mesh = SubResource("NavigationMesh_tqime")
 
 [node name="mesh6_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh6"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh6/mesh6_col"]
-shape = SubResource("ConcavePolygonShape3D_42bd4")
+shape = SubResource("ConcavePolygonShape3D_dwc5p")
 
 [node name="mesh7" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
-mesh = SubResource("ArrayMesh_f44mi")
+mesh = SubResource("ArrayMesh_g81un")
 
 [node name="nav7" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh7"]
-navigation_mesh = SubResource("NavigationMesh_4euu2")
+navigation_mesh = SubResource("NavigationMesh_xfb4d")
 
 [node name="mesh7_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh7"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh7/mesh7_col"]
-shape = SubResource("ConcavePolygonShape3D_ujbih")
+shape = SubResource("ConcavePolygonShape3D_1akva")
 
 [node name="mesh8" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
-mesh = SubResource("ArrayMesh_fwb11")
+mesh = SubResource("ArrayMesh_r8sxm")
 
 [node name="nav8" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh8"]
-navigation_mesh = SubResource("NavigationMesh_1i77u")
+navigation_mesh = SubResource("NavigationMesh_qru3u")
 
 [node name="mesh8_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh8"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh8/mesh8_col"]
-shape = SubResource("ConcavePolygonShape3D_r2764")
+shape = SubResource("ConcavePolygonShape3D_w4gw5")
 
 [node name="mesh9" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
-mesh = SubResource("ArrayMesh_o1p7m")
+mesh = SubResource("ArrayMesh_xk5d1")
 
 [node name="nav9" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh9"]
-navigation_mesh = SubResource("NavigationMesh_wrndq")
+navigation_mesh = SubResource("NavigationMesh_ptb2j")
 
 [node name="mesh9_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh9"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh9/mesh9_col"]
-shape = SubResource("ConcavePolygonShape3D_6jt20")
+shape = SubResource("ConcavePolygonShape3D_jxaf3")
 
 [node name="mesh10" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
-mesh = SubResource("ArrayMesh_vu8nf")
+mesh = SubResource("ArrayMesh_s13jk")
 
 [node name="nav10" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh10"]
-navigation_mesh = SubResource("NavigationMesh_bdd4d")
+navigation_mesh = SubResource("NavigationMesh_qcycs")
 
 [node name="mesh10_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh10"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh10/mesh10_col"]
-shape = SubResource("ConcavePolygonShape3D_pvupf")
+shape = SubResource("ConcavePolygonShape3D_0xdcb")
 
 [node name="mesh11" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
-mesh = SubResource("ArrayMesh_hkemf")
+mesh = SubResource("ArrayMesh_m5x7d")
 
 [node name="nav11" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh11"]
-navigation_mesh = SubResource("NavigationMesh_jmp81")
+navigation_mesh = SubResource("NavigationMesh_4qbpn")
 
 [node name="mesh11_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh11"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh11/mesh11_col"]
-shape = SubResource("ConcavePolygonShape3D_ugcwo")
+shape = SubResource("ConcavePolygonShape3D_sqo54")
 
 [node name="mesh12" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
-mesh = SubResource("ArrayMesh_1atuy")
+mesh = SubResource("ArrayMesh_maifr")
 
 [node name="nav12" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh12"]
-navigation_mesh = SubResource("NavigationMesh_sujeh")
+navigation_mesh = SubResource("NavigationMesh_yxba7")
 
 [node name="mesh12_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh12"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh12/mesh12_col"]
-shape = SubResource("ConcavePolygonShape3D_ppkc0")
+shape = SubResource("ConcavePolygonShape3D_kdr20")
 
 [node name="mesh13" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
-mesh = SubResource("ArrayMesh_chsoh")
+mesh = SubResource("ArrayMesh_p70i0")
 
 [node name="nav13" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh13"]
-navigation_mesh = SubResource("NavigationMesh_14dno")
+navigation_mesh = SubResource("NavigationMesh_rrjp1")
 
 [node name="mesh13_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh13"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh13/mesh13_col"]
-shape = SubResource("ConcavePolygonShape3D_0kfug")
+shape = SubResource("ConcavePolygonShape3D_i2bv8")
 
 [node name="mesh14" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6)
-mesh = SubResource("ArrayMesh_1lya3")
+mesh = SubResource("ArrayMesh_c7mp1")
 
 [node name="nav14" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh14"]
-navigation_mesh = SubResource("NavigationMesh_anbh8")
+navigation_mesh = SubResource("NavigationMesh_qkrds")
 
 [node name="mesh14_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh14"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh14/mesh14_col"]
-shape = SubResource("ConcavePolygonShape3D_mnbv5")
+shape = SubResource("ConcavePolygonShape3D_4d7rc")
 
 [node name="mesh15" type="MeshInstance3D" parent="MarchingSquaresGenerator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
-mesh = SubResource("ArrayMesh_nv1bl")
+mesh = SubResource("ArrayMesh_pvlmy")
 
 [node name="nav15" type="NavigationRegion3D" parent="MarchingSquaresGenerator/mesh15"]
-navigation_mesh = SubResource("NavigationMesh_wvk3r")
+navigation_mesh = SubResource("NavigationMesh_ji5gv")
 
 [node name="mesh15_col" type="StaticBody3D" parent="MarchingSquaresGenerator/mesh15"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MarchingSquaresGenerator/mesh15/mesh15_col"]
-shape = SubResource("ConcavePolygonShape3D_eaf61")
+shape = SubResource("ConcavePolygonShape3D_x8a51")
