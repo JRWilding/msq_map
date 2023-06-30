@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://c4ikqj6b0x5hu"]
 
-[ext_resource type="Script" path="res://Example/multiplayer.gd" id="1_pc4nv"]
+[ext_resource type="Script" path="res://Addons/MarchingSquaresMap/Example/multiplayer.gd" id="1_p57w1"]
 
 [node name="multiplayer" type="Node"]
-script = ExtResource("1_pc4nv")
+script = ExtResource("1_p57w1")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

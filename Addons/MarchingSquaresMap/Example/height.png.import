@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y22kjlw2cah1"
-path="res://.godot/imported/minheight.png-7ace118b9756b8ea16ce4375bfa45be1.ctex"
+uid="uid://btvsb6xrytgpy"
+path="res://.godot/imported/height.png-64daf72584b419100bace95f8093189f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Example/minheight.png"
-dest_files=["res://.godot/imported/minheight.png-7ace118b9756b8ea16ce4375bfa45be1.ctex"]
+source_file="res://Addons/MarchingSquaresMap/Example/height.png"
+dest_files=["res://.godot/imported/height.png-64daf72584b419100bace95f8093189f.ctex"]
 
 [params]
 

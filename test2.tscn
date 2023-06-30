@@ -1,9 +1,9 @@
 [gd_scene load_steps=60 format=3 uid="uid://cj0uw7uqd1sl3"]
 
-[ext_resource type="Shader" uid="uid://boeyymbfjq5vl" path="res://Example/floor_shader.tres" id="1_a4orq"]
+[ext_resource type="Shader" uid="uid://boeyymbfjq5vl" path="res://Addons/MarchingSquaresMap/Example/floor_shader.tres" id="1_a4orq"]
 [ext_resource type="Script" path="res://Addons/FreelookCamera/free_look_camera.gd" id="1_d1ccy"]
 [ext_resource type="Script" path="res://Addons/MarchingSquaresMap/make_meshes.gd" id="4_1t8vg"]
-[ext_resource type="Shader" uid="uid://bkjnbossci07c" path="res://Example/ceiling_shader.tres" id="5_hy7gc"]
+[ext_resource type="Shader" path="res://Example/ceiling_shader.tres" id="5_hy7gc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ycu2"]
 render_priority = 0

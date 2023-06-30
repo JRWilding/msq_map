@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d015iudoubw8i"
-path="res://.godot/imported/smallheight.png-b952c195a8a12d48a26b37395de1bacb.ctex"
+path="res://.godot/imported/smallheight.png-632a4237d25a8421f7864fccb70cdfaa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Example/smallheight.png"
-dest_files=["res://.godot/imported/smallheight.png-b952c195a8a12d48a26b37395de1bacb.ctex"]
+source_file="res://Addons/MarchingSquaresMap/Example/smallheight.png"
+dest_files=["res://.godot/imported/smallheight.png-632a4237d25a8421f7864fccb70cdfaa.ctex"]
 
 [params]
 
