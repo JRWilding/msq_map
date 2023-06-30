@@ -1,7 +1,7 @@
 @tool
 class_name MarchingSquaresGenerator extends Node
 
-@export var instance: int:
+@export var instance := 0:
 	set(newInstance):
 		print("set instance")
 		if get_tree() == null:

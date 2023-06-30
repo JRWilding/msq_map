@@ -2,7 +2,7 @@
 class_name MarchingSquaresMapNode
 extends Node3D
 
-@export var reinit: int:
+@export var reinit: int = 0:
 	set(newReinit):
 		reinit = newReinit
 		rebuild()
@@ -14,22 +14,22 @@ extends Node3D
 		rebuild()
 		toPoly()
 
-@export var mapScale: float = 1:
+@export var mapScale := 1.0:
 	set(newMapScale):
 		mapScale = newMapScale
 		toPoly()
 		
-@export var wallHeight: float = 2:
+@export var wallHeight := 2.0:
 	set(newWallHeight):
 		wallHeight = newWallHeight
 		toPoly()
 
-@export var chunkSize: float = 16:
+@export var chunkSize := 16.0:
 	set(newChunkSize):
 		chunkSize = newChunkSize
 		toPoly()
 
-@export var useGridMap: bool = false:
+@export var useGridMap := false:
 	set(newUseGridMap):
 		useGridMap = newUseGridMap
 		toPoly()
