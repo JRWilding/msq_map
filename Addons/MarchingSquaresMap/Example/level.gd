@@ -23,7 +23,7 @@ func _exit_tree():
 	multiplayer.peer_disconnected.disconnect(del_player)
 	
 func add_player(id: int):
-	var player = preload("res://Example/player.tscn").instantiate()
+	var player = preload("res://Addons/MarchingSquaresMap/Example/player.tscn").instantiate()
 	player.player = id
 	var pos := Vector2.from_angle(randf() * 2 * PI)
 	player.position = Vector3(pos.x * spawn_random * randf(), 1, pos.y * spawn_random * randf())
