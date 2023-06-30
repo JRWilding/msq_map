@@ -3,35 +3,50 @@ class_name MarchingSquaresMapNode
 extends Node3D
 
 @export var reinit: int = 0:
-	set(newReinit):
-		reinit = newReinit
+	set(value):
+		reinit = value
 		rebuild()
 		toPoly()
 		
 @export var image: CompressedTexture2D:
-	set(newImage):
-		image = newImage
+	set(value):
+		image = value
 		rebuild()
 		toPoly()
 
 @export var mapScale := 1.0:
-	set(newMapScale):
-		mapScale = newMapScale
+	set(value):
+		mapScale = value
 		toPoly()
 		
 @export var wallHeight := 2.0:
-	set(newWallHeight):
-		wallHeight = newWallHeight
+	set(value):
+		wallHeight = value
 		toPoly()
 
 @export var chunkSize := 16.0:
-	set(newChunkSize):
-		chunkSize = newChunkSize
+	set(value):
+		chunkSize = value
 		toPoly()
 
 @export var useGridMap := false:
-	set(newUseGridMap):
-		useGridMap = newUseGridMap
+	set(value):
+		useGridMap = value
+		toPoly()
+
+@export var floorMaterial: Material:
+	set(value):
+		floorMaterial = value
+		toPoly()
+		
+@export var wallMaterial: Material:
+	set(value):
+		wallMaterial = value
+		toPoly()
+		
+@export var ceilingMaterial: Material:
+	set(value):
+		ceilingMaterial = value
 		toPoly()
 		
 var cellIsSolid: Array[int] = []
@@ -163,27 +178,19 @@ func toPoly():
 			var c = str(chunk)
 			chunk += 1
 			if hasCeiling:
-#				var mat = StandardMaterial3D.new()
-#				mat.albedo_color = Color.DARK_GRAY
-				var mat = ShaderMaterial.new()
-				mat.shader = preload("res://addons/msq_map/example/ceiling_shader.tres")
-				addToWorld(chunks, 3, ceilingTool, "Ceiling" + c, mat)
+				addToWorld(chunks, 3, ceilingTool, "Ceiling" + c, ceilingMaterial)
 			if hasWall:
-				var mat = StandardMaterial3D.new()
-				mat.albedo_color = Color.DARK_SLATE_GRAY
-				addToWorld(chunks, 2, wallTool, "Wall" + c, mat)
+				addToWorld(chunks, 2, wallTool, "Wall" + c, wallMaterial)
 			if hasFloor:
-				var mat = StandardMaterial3D.new()
-				mat.albedo_color = Color.DIM_GRAY
-				var floorNode = addToWorld(chunks, 1, floorTool, "Floor" + c, mat)
-				floorNode.add_to_group("msq_nav_floor")
+				var floorNode = addToWorld(chunks, 1, floorTool, "Floor" + c, floorMaterial)
+				floorNode.add_to_group("msq_map_nav_floor")
 			
 	var floorNav = NavigationMesh.new()
 	floorNav.agent_radius = 0.5
 	floorNav.agent_max_climb = 0.2
 	floorNav.cell_size = 0.05
 	floorNav.cell_height = 0.1
-	floorNav.geometry_source_group_name = "msq_nav_floor"
+	floorNav.geometry_source_group_name = "msq_map_nav_floor"
 	floorNav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_EXPLICIT
 	
 	navRegion.navigation_mesh = floorNav

@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://bql0lgukbm5od"]
 
-[ext_resource type="Shader" uid="uid://b8g1ir8wtbe5v" path="res://addons/msq_map/example/ceiling_shader.tres" id="1_75x1o"]
+[ext_resource type="Shader" uid="uid://b8g1ir8wtbe5v" path="res://addons/msq_map/example/shaders/ceiling_shader.tres" id="1_7smo3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fsvti"]
 render_priority = 0
-shader = ExtResource("1_75x1o")
+shader = ExtResource("1_7smo3")
 
 [sub_resource type="TorusMesh" id="TorusMesh_ruffk"]
 material = SubResource("ShaderMaterial_fsvti")

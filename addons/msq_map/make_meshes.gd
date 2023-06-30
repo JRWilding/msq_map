@@ -2,11 +2,11 @@
 class_name MarchingSquaresGenerator extends Node
 
 @export var instance := 0:
-	set(newInstance):
+	set(value):
 		print("set instance")
 		if get_tree() == null:
 			return
-		instance = newInstance
+		instance = value
 		generateAll()
 
 const dtl = Vector3(0, 0, 0)
