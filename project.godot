@@ -15,6 +15,10 @@ run/main_scene="res://addons/msq_map/example/multiplayer.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
+[editor]
+
+movie_writer/movie_file="C:/dev/godot/MarchingSquares/build/movie.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/msq_map/plugin.cfg")
@@ -31,3 +35,22 @@ enabled=PackedStringArray("res://addons/msq_map/plugin.cfg")
 
 3d/run_on_separate_thread=true
 3d/physics_engine="GodotPhysics3D"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[shader_globals]
+
+TextureParameterTriplanar={
+"type": "sampler2D",
+"value": "res://addons/msq_map/example/textures/cavern-walls_height.png"
+}
+Texture2DParameter={
+"type": "sampler2D",
+"value": "res://addons/msq_map/example/textures/cavern-walls_height.png"
+}
+Texture2DParameter2={
+"type": "sampler2D",
+"value": "res://addons/msq_map/example/textures/cavern-walls_height.png"
+}

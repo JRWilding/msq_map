@@ -1,241 +1,158 @@
-[gd_resource type="VisualShader" load_steps=12 format=3 uid="uid://b8g1ir8wtbe5v"]
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://b8g1ir8wtbe5v"]
 
-[ext_resource type="Script" path="res://addons/shaderV/uv/animated/distortionUVAnimated.gd" id="2_eweq2"]
-[ext_resource type="Script" path="res://addons/shaderV/rgba/noise/perlin4d.gd" id="3_1y1p2"]
-[ext_resource type="Script" path="res://addons/shaderV/rgba/sobelEdge.gd" id="3_ge4s8"]
-[ext_resource type="Script" path="res://addons/shaderV/tools/TimeScaled.gd" id="4_iof56"]
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_jtg6u"]
+constant = Color(0, 0, 0, 1)
 
-[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_g8xvl"]
-default_input_values = [1, 10.0, 2, 10.0, 3, 1.0, 4, 1.0, 5, 2.0, 6, 0.0]
-initialized = true
-script = ExtResource("2_eweq2")
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_6xioo"]
 
-[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_0h3oa"]
-output_port_for_preview = 0
-default_input_values = [1, Vector3(0, 0, 0), 2, 4.0, 3, 1.0, 4, 0.0]
-initialized = true
-script = ExtResource("3_1y1p2")
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_mx5g8"]
+size = Vector2(688, 440)
+expression = "uniform vec2 u_center;
 
-[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_i6mgo"]
-output_port_for_preview = 0
-default_input_values = [2, -1.0, 3, 0.001, 4, false, 5, false]
-initialized = true
-script = ExtResource("3_ge4s8")
+void fragment() {
+	vec3 u_center = VARYING(u_center);
+    vec2 uv = VARYING(v_uv); // UV coordinates interpolated from the vertex shader
+    vec2 centerToFragment = uv - u_center;
+    float distance = length(centerToFragment);
 
-[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_4tgct"]
-parameter_name = "Texture2DParameter"
+    // Apply a falloff function to control the mist intensity
+    float mistIntensity = smoothstep(0.0, 1.0, distance);
 
-[sub_resource type="VisualShaderNodeTextureParameterTriplanar" id="VisualShaderNodeTextureParameterTriplanar_t51ju"]
-parameter_name = "TextureParameterTriplanar"
-texture_source = 2
+    // Use the mist intensity to blend the fragment color with the mist color
+    vec4 mistColor = vec4(1.0, 1.0, 1.0, 1.0); // Replace with your desired mist color
+    colour_out = mix(mistColor, COLOR, mistIntensity);
+}"
 
-[sub_resource type="VisualShaderNodeLinearSceneDepth" id="VisualShaderNodeLinearSceneDepth_r6j4k"]
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_kqvo5"]
+size = Vector2(717.5, 465.7)
+expression = "void vertex() {
+    // Calculate the center point of the quad
+    vec4 centerPosition = (gl_PositionIn[0] + gl_PositionIn[1] + gl_PositionIn[2] + gl_PositionIn[3]) * 0.25;
+    center_out = centerPosition.xy;
+	uv_out = VERTEX.xy
+    // Other vertex shader operations...
+}"
 
-[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_42bas"]
-default_input_values = [0, 1.0]
-initialized = true
-script = ExtResource("4_iof56")
+[sub_resource type="VisualShaderNodeVaryingSetter" id="VisualShaderNodeVaryingSetter_g5a27"]
+varying_name = "v_center"
+varying_type = 4
 
 [resource]
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 
+// Varyings
+varying vec2 v_uv;
+varying vec3 v_center;
 
-// DistortionUVAnimated
-vec2 _distortionUVAnimatedFunc(vec2 _uv_dist, float _distX_dist, float _distY_dist, float _waveX_dist, float _waveY_dist, float _spd_dist, float _time_dist){
-	_uv_dist.x += sin(_uv_dist.y * _waveX_dist + _time_dist * _spd_dist) * _distX_dist;
-	_uv_dist.y += sin(_uv_dist.x * _waveY_dist + _time_dist * _spd_dist) * _distY_dist;
-	return _uv_dist;
-}
-// PerlinNoise4D
-vec4 _permute_perlin4d_noise_func(vec4 x) {
-	return ((x*34.0)+1.0)*x - floor(((x*34.0)+1.0)*x * (1.0 / 289.0)) * 289.0;
-}
-float _perlin4dNoiseFunc(vec4 P) {
-	vec4 Pi0 = floor(P);
-	vec4 Pi1 = Pi0 + 1.0;
-	Pi0 = Pi0 - floor(Pi0 * (1.0 / 289.0)) * 289.0;
-	Pi1 = Pi1 - floor(Pi1 * (1.0 / 289.0)) * 289.0;
-	vec4 Pf0 = fract(P);
-	vec4 Pf1 = Pf0 - 1.0;
-	vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
-	vec4 iy = vec4(Pi0.yy, Pi1.yy);
-	vec4 iz0 = vec4(Pi0.zzzz);
-	vec4 iz1 = vec4(Pi1.zzzz);
-	vec4 iw0 = vec4(Pi0.wwww);
-	vec4 iw1 = vec4(Pi1.wwww);
-	
-	vec4 ixy = _permute_perlin4d_noise_func(_permute_perlin4d_noise_func(ix) + iy);
-	vec4 ixy0 = _permute_perlin4d_noise_func(ixy + iz0);
-	vec4 ixy1 = _permute_perlin4d_noise_func(ixy + iz1);
-	vec4 ixy00 = _permute_perlin4d_noise_func(ixy0 + iw0);
-	vec4 ixy01 = _permute_perlin4d_noise_func(ixy0 + iw1);
-	vec4 ixy10 = _permute_perlin4d_noise_func(ixy1 + iw0);
-	vec4 ixy11 = _permute_perlin4d_noise_func(ixy1 + iw1);
-	
-	vec4 gx00 = ixy00 * (1.0 / 7.0);
-	vec4 gy00 = floor(gx00) * (1.0 / 7.0);
-	vec4 gz00 = floor(gy00) * (1.0 / 6.0);
-	gx00 = fract(gx00) - 0.5;
-	gy00 = fract(gy00) - 0.5;
-	gz00 = fract(gz00) - 0.5;
-	vec4 gw00 = vec4(0.75) - abs(gx00) - abs(gy00) - abs(gz00);
-	vec4 sw00 = step(gw00, vec4(0.0));
-	gx00 -= sw00 * (step(0.0, gx00) - 0.5);
-	gy00 -= sw00 * (step(0.0, gy00) - 0.5);
-	
-	vec4 gx01 = ixy01 * (1.0 / 7.0);
-	vec4 gy01 = floor(gx01) * (1.0 / 7.0);
-	vec4 gz01 = floor(gy01) * (1.0 / 6.0);
-	gx01 = fract(gx01) - 0.5;
-	gy01 = fract(gy01) - 0.5;
-	gz01 = fract(gz01) - 0.5;
-	vec4 gw01 = vec4(0.75) - abs(gx01) - abs(gy01) - abs(gz01);
-	vec4 sw01 = step(gw01, vec4(0.0));
-	gx01 -= sw01 * (step(0.0, gx01) - 0.5);
-	gy01 -= sw01 * (step(0.0, gy01) - 0.5);
-	
-	vec4 gx10 = ixy10 * (1.0 / 7.0);
-	vec4 gy10 = floor(gx10) * (1.0 / 7.0);
-	vec4 gz10 = floor(gy10) * (1.0 / 6.0);
-	gx10 = fract(gx10) - 0.5;
-	gy10 = fract(gy10) - 0.5;
-	gz10 = fract(gz10) - 0.5;
-	vec4 gw10 = vec4(0.75) - abs(gx10) - abs(gy10) - abs(gz10);
-	vec4 sw10 = step(gw10, vec4(0.0));
-	gx10 -= sw10 * (step(0.0, gx10) - 0.5);
-	gy10 -= sw10 * (step(0.0, gy10) - 0.5);
-	
-	vec4 gx11 = ixy11 * (1.0 / 7.0);
-	vec4 gy11 = floor(gx11) * (1.0 / 7.0);
-	vec4 gz11 = floor(gy11) * (1.0 / 6.0);
-	gx11 = fract(gx11) - 0.5;
-	gy11 = fract(gy11) - 0.5;
-	gz11 = fract(gz11) - 0.5;
-	vec4 gw11 = vec4(0.75) - abs(gx11) - abs(gy11) - abs(gz11);
-	vec4 sw11 = step(gw11, vec4(0.0));
-	gx11 -= sw11 * (step(0.0, gx11) - 0.5);
-	gy11 -= sw11 * (step(0.0, gy11) - 0.5);
-	
-	vec4 g0000 = vec4(gx00.x,gy00.x,gz00.x,gw00.x);
-	vec4 g1000 = vec4(gx00.y,gy00.y,gz00.y,gw00.y);
-	vec4 g0100 = vec4(gx00.z,gy00.z,gz00.z,gw00.z);
-	vec4 g1100 = vec4(gx00.w,gy00.w,gz00.w,gw00.w);
-	vec4 g0010 = vec4(gx10.x,gy10.x,gz10.x,gw10.x);
-	vec4 g1010 = vec4(gx10.y,gy10.y,gz10.y,gw10.y);
-	vec4 g0110 = vec4(gx10.z,gy10.z,gz10.z,gw10.z);
-	vec4 g1110 = vec4(gx10.w,gy10.w,gz10.w,gw10.w);
-	vec4 g0001 = vec4(gx01.x,gy01.x,gz01.x,gw01.x);
-	vec4 g1001 = vec4(gx01.y,gy01.y,gz01.y,gw01.y);
-	vec4 g0101 = vec4(gx01.z,gy01.z,gz01.z,gw01.z);
-	vec4 g1101 = vec4(gx01.w,gy01.w,gz01.w,gw01.w);
-	vec4 g0011 = vec4(gx11.x,gy11.x,gz11.x,gw11.x);
-	vec4 g1011 = vec4(gx11.y,gy11.y,gz11.y,gw11.y);
-	vec4 g0111 = vec4(gx11.z,gy11.z,gz11.z,gw11.z);
-	vec4 g1111 = vec4(gx11.w,gy11.w,gz11.w,gw11.w);
-	
-	vec4 norm00 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0000, g0000), dot(g0100, g0100), dot(g1000, g1000), dot(g1100, g1100));
-	g0000 *= norm00.x;
-	g0100 *= norm00.y;
-	g1000 *= norm00.z;
-	g1100 *= norm00.w;
-	
-	vec4 norm01 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0001, g0001), dot(g0101, g0101), dot(g1001, g1001), dot(g1101, g1101));
-	g0001 *= norm01.x;
-	g0101 *= norm01.y;
-	g1001 *= norm01.z;
-	g1101 *= norm01.w;
-	
-	vec4 norm10 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0010, g0010), dot(g0110, g0110), dot(g1010, g1010), dot(g1110, g1110));
-	g0010 *= norm10.x;
-	g0110 *= norm10.y;
-	g1010 *= norm10.z;
-	g1110 *= norm10.w;
-	
-	vec4 norm11 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0011, g0011), dot(g0111, g0111), dot(g1011, g1011), dot(g1111, g1111));
-	g0011 *= norm11.x;
-	g0111 *= norm11.y;
-	g1011 *= norm11.z;
-	g1111 *= norm11.w;
-	
-	float n0000 = dot(g0000, Pf0);
-	float n1000 = dot(g1000, vec4(Pf1.x, Pf0.yzw));
-	float n0100 = dot(g0100, vec4(Pf0.x, Pf1.y, Pf0.zw));
-	float n1100 = dot(g1100, vec4(Pf1.xy, Pf0.zw));
-	float n0010 = dot(g0010, vec4(Pf0.xy, Pf1.z, Pf0.w));
-	float n1010 = dot(g1010, vec4(Pf1.x, Pf0.y, Pf1.z, Pf0.w));
-	float n0110 = dot(g0110, vec4(Pf0.x, Pf1.yz, Pf0.w));
-	float n1110 = dot(g1110, vec4(Pf1.xyz, Pf0.w));
-	float n0001 = dot(g0001, vec4(Pf0.xyz, Pf1.w));
-	float n1001 = dot(g1001, vec4(Pf1.x, Pf0.yz, Pf1.w));
-	float n0101 = dot(g0101, vec4(Pf0.x, Pf1.y, Pf0.z, Pf1.w));
-	float n1101 = dot(g1101, vec4(Pf1.xy, Pf0.z, Pf1.w));
-	float n0011 = dot(g0011, vec4(Pf0.xy, Pf1.zw));
-	float n1011 = dot(g1011, vec4(Pf1.x, Pf0.y, Pf1.zw));
-	float n0111 = dot(g0111, vec4(Pf0.x, Pf1.yzw));
-	float n1111 = dot(g1111, Pf1);
-	
-	vec4 fade_xyzw = Pf0 * Pf0 * Pf0 * (Pf0 * (Pf0 * 6.0 - 15.0) + 10.0);
-	vec4 n_0w = mix(vec4(n0000, n1000, n0100, n1100), vec4(n0001, n1001, n0101, n1101), fade_xyzw.w);
-	vec4 n_1w = mix(vec4(n0010, n1010, n0110, n1110), vec4(n0011, n1011, n0111, n1111), fade_xyzw.w);
-	vec4 n_zw = mix(n_0w, n_1w, fade_xyzw.z);
-	vec2 n_yzw = mix(n_zw.xy, n_zw.zw, fade_xyzw.y);
-	float n_xyzw = mix(n_yzw.x, n_yzw.y, fade_xyzw.x);
-	return 2.2 * n_xyzw;
-}
 
-void fragment() {
-	float n_out4p0;
-// ScaledTIME:4
-	float n_in4p0 = 1.00000;
+
+
+void vertex() {
+	vec3 n_out4p0;
+	vec3 n_out4p1;
+// Expression:4
+	n_out4p0 = vec3(0.0, 0.0, 0.0);
+	n_out4p1 = vec3(0.0, 0.0, 0.0);
 	{
-		n_out4p0 = n_in4p0 * TIME;
-	}
-
-
-	vec3 n_out16p0;
-// DistortionUVAnimated:16
-	float n_in16p1 = 10.00000;
-	float n_in16p2 = 10.00000;
-	float n_in16p3 = 1.00000;
-	float n_in16p4 = 1.00000;
-	float n_in16p5 = 2.00000;
-	{
-		n_out16p0.xy = _distortionUVAnimatedFunc(UV.xy, n_in16p3, n_in16p4, n_in16p1, n_in16p2, n_in16p5, n_out4p0);
-	}
-
-
-	float n_out2p0;
-// PerlinNoise4D:2
-	vec3 n_in2p1 = vec3(0.00000, 0.00000, 0.00000);
-	float n_in2p2 = 4.00000;
-	float n_in2p3 = 1.00000;
-	float n_in2p4 = 0.00000;
-	{
-		n_out2p0 = _perlin4dNoiseFunc(vec4((n_out16p0.xy + n_in2p1.xy) * n_in2p2, n_in2p3, n_in2p4));
+		void vertex() {
+		    // Calculate the center point of the quad
+		    vec4 centerPosition = (gl_PositionIn[0] + gl_PositionIn[1] + gl_PositionIn[2] + gl_PositionIn[3]) * 0.25;
+		    n_out4p0 = centerPosition.xy;
+			n_out4p1 = VERTEX.xy
+		    // Other vertex shader operations...
+		}
 	}
 
 
 // Output:0
-	ALBEDO = vec3(n_out2p0);
+	UV = vec2(n_out4p1.xy);
+
+
+// VaryingSetter:5
+	v_center = n_out4p0;
+
+
+	v_uv = vec2(0.0);
+}
+
+void fragment() {
+	vec3 n_out33p0;
+// Expression:33
+	n_out33p0 = vec3(0.0, 0.0, 0.0);
+	{
+		uniform vec2 u_center;
+		
+		void fragment() {
+			vec3 u_center = VARYING(u_center);
+		    vec2 uv = VARYING(v_uv); // UV coordinates interpolated from the vertex shader
+		    vec2 centerToFragment = uv - u_center;
+		    float distance = length(centerToFragment);
+		
+		    // Apply a falloff function to control the mist intensity
+		    float mistIntensity = smoothstep(0.0, 1.0, distance);
+		
+		    // Use the mist intensity to blend the fragment color with the mist color
+		    vec4 mistColor = vec4(1.0, 1.0, 1.0, 1.0); // Replace with your desired mist color
+		    n_out33p0 = mix(mistColor, COLOR, mistIntensity);
+		}
+	}
+
+
+// ColorConstant:32
+	vec4 n_out32p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
+// Output:0
+	ALBEDO = n_out33p0;
+	METALLIC = n_out32p0.x;
 
 
 }
 "
-graph_offset = Vector2(-445, -143)
-nodes/fragment/2/node = SubResource("VisualShaderNodeCustom_0h3oa")
-nodes/fragment/2/position = Vector2(-200, 0)
-nodes/fragment/4/node = SubResource("VisualShaderNodeCustom_42bas")
-nodes/fragment/4/position = Vector2(-880, 140)
-nodes/fragment/16/node = SubResource("VisualShaderNodeCustom_g8xvl")
-nodes/fragment/16/position = Vector2(-640, -40)
-nodes/fragment/20/node = SubResource("VisualShaderNodeCustom_i6mgo")
-nodes/fragment/20/position = Vector2(40, 200)
-nodes/fragment/23/node = SubResource("VisualShaderNodeTexture2DParameter_4tgct")
-nodes/fragment/23/position = Vector2(-920, 280)
-nodes/fragment/24/node = SubResource("VisualShaderNodeTextureParameterTriplanar_t51ju")
-nodes/fragment/24/position = Vector2(-280, 520)
-nodes/fragment/25/node = SubResource("VisualShaderNodeLinearSceneDepth_r6j4k")
-nodes/fragment/25/position = Vector2(-540, 240)
-nodes/fragment/connections = PackedInt32Array(16, 0, 2, 0, 4, 0, 16, 6, 23, 0, 20, 0, 2, 0, 0, 0)
+graph_offset = Vector2(-436.809, -122.415)
+varyings/v_uv = "0,3"
+varyings/v_center = "0,4"
+nodes/vertex/0/position = Vector2(780, 220)
+nodes/vertex/4/node = SubResource("VisualShaderNodeExpression_kqvo5")
+nodes/vertex/4/position = Vector2(-240, 0)
+nodes/vertex/4/size = Vector2(717.5, 465.7)
+nodes/vertex/4/input_ports = ""
+nodes/vertex/4/output_ports = "0,4,center_out;1,4,uv_out;"
+nodes/vertex/4/expression = "void vertex() {
+    // Calculate the center point of the quad
+    vec4 centerPosition = (gl_PositionIn[0] + gl_PositionIn[1] + gl_PositionIn[2] + gl_PositionIn[3]) * 0.25;
+    center_out = centerPosition.xy;
+	uv_out = VERTEX.xy
+    // Other vertex shader operations...
+}"
+nodes/vertex/5/node = SubResource("VisualShaderNodeVaryingSetter_g5a27")
+nodes/vertex/5/position = Vector2(760, 20)
+nodes/vertex/connections = PackedInt32Array(4, 0, 5, 0, 4, 1, 0, 4)
+nodes/fragment/0/position = Vector2(920, 120)
+nodes/fragment/31/node = SubResource("VisualShaderNodeColorConstant_jtg6u")
+nodes/fragment/31/position = Vector2(720, 100)
+nodes/fragment/32/node = SubResource("VisualShaderNodeColorConstant_6xioo")
+nodes/fragment/32/position = Vector2(700, 340)
+nodes/fragment/33/node = SubResource("VisualShaderNodeExpression_mx5g8")
+nodes/fragment/33/position = Vector2(-20, 120)
+nodes/fragment/33/size = Vector2(688, 440)
+nodes/fragment/33/input_ports = ""
+nodes/fragment/33/output_ports = "0,4,colour_out;"
+nodes/fragment/33/expression = "uniform vec2 u_center;
+
+void fragment() {
+	vec3 u_center = VARYING(u_center);
+    vec2 uv = VARYING(v_uv); // UV coordinates interpolated from the vertex shader
+    vec2 centerToFragment = uv - u_center;
+    float distance = length(centerToFragment);
+
+    // Apply a falloff function to control the mist intensity
+    float mistIntensity = smoothstep(0.0, 1.0, distance);
+
+    // Use the mist intensity to blend the fragment color with the mist color
+    vec4 mistColor = vec4(1.0, 1.0, 1.0, 1.0); // Replace with your desired mist color
+    colour_out = mix(mistColor, COLOR, mistIntensity);
+}"
+nodes/fragment/connections = PackedInt32Array(32, 0, 0, 2, 33, 0, 0, 0)

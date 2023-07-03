@@ -68,9 +68,34 @@ const msConfig = [
 				
 func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3) -> bool:
 	var verts2 = []
+	var uvs = []
+	var map = Vector2(iw / chunkSize, ih / chunkSize) * Vector2(sc.x, sc.z)
+	#var map = Vector2(iw, ih) * Vector2(sc.x, sc.z)
+	var isWall = false
+	var isFloor = false
+	if verts.size() >= 3:
+		var v1 = verts[0]
+		var v2 = verts[1]
+		var v3 = verts[2]
+		var y = v1.y + v2.y + v3.y
+		isWall = y > 0 && y < 3
+		isFloor = y == 0
+		
 	for v in verts:
-		verts2.push_back((v + offset) * sc)
-	MarchingSquaresGenerator.writeToTool(verts2, tool)
+		var v2 = (v + offset) * sc
+		verts2.push_back(v2)
+		#uvs.push_back(Vector2(v.x, v.z))
+		if isWall:
+			uvs.push_back(Vector2((v.x+v.z)/2, v.y * wallHeight))
+		#elif isFloor:
+			
+		else:
+			uvs.push_back(Vector2(v2.x, v2.z) / map)
+			
+	
+	#MarchingSquaresGenerator.writeToTool(verts2, tool)	
+	MarchingSquaresGenerator.writeToToolUV(verts2, uvs, tool)
+	
 	return not verts.is_empty()
 	
 func addToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, mat: Material) -> MeshInstance3D:

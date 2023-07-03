@@ -40,7 +40,14 @@ static func writeToTool(arr: Array, tool: SurfaceTool):
 	for v in arr:
 		tool.set_uv(Vector2(v.x, v.z))		
 		tool.add_vertex(v)
-	
+
+static func writeToToolUV(verts: Array, uvs: Array, tool: SurfaceTool):
+	var i = 0
+	for v in verts:
+		tool.set_uv(uvs[i])
+		i += 1
+		tool.add_vertex(v)
+			
 static func finishTool(tool: SurfaceTool):	
 	tool.index()
 	tool.generate_normals()
@@ -207,6 +214,7 @@ static func generateVerts(config: int) -> Array[Array]:
 		var v3 = verts[i+2]
 		var y = v1.y + v2.y + v3.y
 		var arr = fl if y == 0 else ce if y == 3 else wa
+		
 		arr.push_back(v2)
 		arr.push_back(v3)
 		arr.push_back(v1)
