@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=19 format=3 uid="uid://k7dcokjxlynt"]
+[gd_resource type="VisualShader" load_steps=18 format=3 uid="uid://k7dcokjxlynt"]
 
 [ext_resource type="Texture2D" uid="uid://4euo55ed2cs6" path="res://addons/msq_map/example/textures/cavern-walls_albedo.png" id="1_c4l6i"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/normalFromHeightmap.gd" id="1_sueds"]
@@ -7,9 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://x2yjpk10rm6f" path="res://addons/msq_map/example/textures/cavern-walls_metallic.png" id="4_0aq2x"]
 [ext_resource type="Texture2D" uid="uid://cglc0ec2tstsk" path="res://addons/msq_map/example/textures/cavern-walls_normal-ogl.png" id="5_wkf6t"]
 [ext_resource type="Texture2D" uid="uid://b5w5xidmuy43l" path="res://addons/msq_map/example/textures/cavern-walls_roughness.png" id="6_unt1r"]
-
-[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_ufarn"]
-constant = 0.947
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_glae1"]
 texture = ExtResource("1_c4l6i")
@@ -94,7 +91,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-90.1053, 74.2361)
 nodes/vertex/2/node = SubResource("VisualShaderNodeTexture2DParameter_f6p3n")
 nodes/vertex/2/position = Vector2(-780, 80)
 nodes/vertex/3/node = SubResource("VisualShaderNodeCustom_8a7y0")
@@ -104,7 +100,7 @@ nodes/vertex/5/position = Vector2(-160, -40)
 nodes/vertex/6/node = SubResource("VisualShaderNodeVectorOp_1gvtt")
 nodes/vertex/6/position = Vector2(140, 20)
 nodes/vertex/connections = PackedInt32Array(2, 0, 3, 0, 5, 0, 6, 0, 3, 0, 6, 1)
-nodes/fragment/0/position = Vector2(640, 100)
+nodes/fragment/0/position = Vector2(700, 80)
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_glae1")
 nodes/fragment/2/position = Vector2(340, -340)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_l5xrs")
@@ -117,6 +113,4 @@ nodes/fragment/6/node = SubResource("VisualShaderNodeTexture_en1da")
 nodes/fragment/6/position = Vector2(340, 220)
 nodes/fragment/9/node = SubResource("VisualShaderNodeTexture_ptd41")
 nodes/fragment/9/position = Vector2(340, -80)
-nodes/fragment/10/node = SubResource("VisualShaderNodeFloatConstant_ufarn")
-nodes/fragment/10/position = Vector2(360, 520)
-nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 6, 0, 0, 9, 3, 0, 0, 6, 9, 0, 0, 3, 5, 0, 0, 2, 4, 0, 0, 10)
+nodes/fragment/connections = PackedInt32Array(6, 0, 0, 9, 3, 0, 0, 6, 9, 0, 0, 3, 5, 0, 0, 2, 4, 0, 0, 10, 2, 0, 0, 0)

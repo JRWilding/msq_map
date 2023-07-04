@@ -66,11 +66,20 @@ const msConfig = [
 	8, 4, 2, 1
 ]
 				
-func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3) -> bool:
-	var verts2 = []
-	var uvs = []
+func copyToTool(tool: SurfaceTool, genMesh: Array, offset: Vector3, sc: Vector3) -> bool:
+	if genMesh[0].is_empty():
+		return false
+		
+	if genMesh[0].size() != genMesh[1].size():
+		return false
+			
+	var verts = genMesh[0]
+	var tVerts = []
+	var uvs = genMesh[1]
+	var tUvs = []
+	var edges = genMesh[2]
 	var map = Vector2(iw / chunkSize, ih / chunkSize) * Vector2(sc.x, sc.z)
-	#var map = Vector2(iw, ih) * Vector2(sc.x, sc.z)
+
 	var isWall = false
 	var isFloor = false
 	if verts.size() >= 3:
@@ -81,29 +90,24 @@ func copyToTool(tool: SurfaceTool, verts: Array, offset: Vector3, sc: Vector3) -
 		isWall = y > 0 && y < 3
 		isFloor = y == 0
 		
-	for v in verts:
-		var v2 = (v + offset) * sc
-		verts2.push_back(v2)
-		#uvs.push_back(Vector2(v.x, v.z))
+	for i in range(verts.size()):
+		var v2 = (verts[i] + offset) * sc
+		tVerts.push_back(v2)
 		if isWall:
-			uvs.push_back(Vector2((v.x+v.z)/2, v.y * wallHeight))
-		#elif isFloor:
-			
+			tUvs.push_back(uvs[i])
 		else:
-			uvs.push_back(Vector2(v2.x, v2.z) / map)
-			
+			tUvs.push_back(Vector2(v2.x, v2.z) / map)
+
+	MarchingSquaresGenerator.writeToToolUV(tVerts, tUvs, edges, tool)
 	
-	#MarchingSquaresGenerator.writeToTool(verts2, tool)	
-	MarchingSquaresGenerator.writeToToolUV(verts2, uvs, tool)
-	
-	return not verts.is_empty()
+	return true
 	
 func addToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, mat: Material) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
 	P1Utils.addEditorChild(parent, meshNode, nodeName)
 	MarchingSquaresGenerator.finishTool(tool)
 	meshNode.mesh = tool.commit()
-	meshNode.material_overlay = mat
+	meshNode.material_override = mat
 	meshNode.create_trimesh_collision()
 	var col: StaticBody3D = meshNode.get_child(0)
 	col.collision_layer = colLayer

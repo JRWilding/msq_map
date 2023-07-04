@@ -1,158 +1,371 @@
-[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://b8g1ir8wtbe5v"]
+[gd_resource type="VisualShader" load_steps=21 format=3 uid="uid://b8g1ir8wtbe5v"]
 
-[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_jtg6u"]
+[ext_resource type="Script" path="res://addons/shaderV/rgba/noise/perlin4d.gd" id="2_o1cq0"]
+[ext_resource type="Script" path="res://addons/shaderV/tools/TimeScaled.gd" id="3_j3g1h"]
+
+[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_01eaj"]
+output_port_for_preview = 0
+default_input_values = [1, Vector3(0, 0, 0), 2, 10.0, 3, 1.0, 4, 0.0]
+initialized = true
+script = ExtResource("2_o1cq0")
+
+[sub_resource type="VisualShaderNodeColorOp" id="VisualShaderNodeColorOp_s13ry"]
+output_port_for_preview = 0
+operator = 1
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_4ha7d"]
+constant = 0.3
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_j5jl2"]
+default_input_values = [0, 0.0, 1, 0.0, 2, 0.0, 3, 0.0]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_excpe"]
 constant = Color(0, 0, 0, 1)
 
-[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_6xioo"]
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_aj13h"]
+input_name = "color"
 
-[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_mx5g8"]
-size = Vector2(688, 440)
-expression = "uniform vec2 u_center;
+[sub_resource type="VisualShaderNodeColorOp" id="VisualShaderNodeColorOp_3x6k6"]
+output_port_for_preview = 0
 
-void fragment() {
-	vec3 u_center = VARYING(u_center);
-    vec2 uv = VARYING(v_uv); // UV coordinates interpolated from the vertex shader
-    vec2 centerToFragment = uv - u_center;
-    float distance = length(centerToFragment);
+[sub_resource type="VisualShaderNodeVec4Constant" id="VisualShaderNodeVec4Constant_q5jqm"]
+constant = Quaternion(1, 1, 1, 1)
 
-    // Apply a falloff function to control the mist intensity
-    float mistIntensity = smoothstep(0.0, 1.0, distance);
+[sub_resource type="VisualShaderNodeVectorFunc" id="VisualShaderNodeVectorFunc_k432r"]
+output_port_for_preview = 0
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+function = 2
 
-    // Use the mist intensity to blend the fragment color with the mist color
-    vec4 mistColor = vec4(1.0, 1.0, 1.0, 1.0); // Replace with your desired mist color
-    colour_out = mix(mistColor, COLOR, mistIntensity);
-}"
+[sub_resource type="VisualShaderNodeVectorFunc" id="VisualShaderNodeVectorFunc_3v13i"]
+output_port_for_preview = 0
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+function = 32
 
-[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_kqvo5"]
-size = Vector2(717.5, 465.7)
-expression = "void vertex() {
-    // Calculate the center point of the quad
-    vec4 centerPosition = (gl_PositionIn[0] + gl_PositionIn[1] + gl_PositionIn[2] + gl_PositionIn[3]) * 0.25;
-    center_out = centerPosition.xy;
-	uv_out = VERTEX.xy
-    // Other vertex shader operations...
-}"
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_udwv0"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
+op_type = 2
+operator = 1
 
-[sub_resource type="VisualShaderNodeVaryingSetter" id="VisualShaderNodeVaryingSetter_g5a27"]
-varying_name = "v_center"
-varying_type = 4
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_r2k83"]
+output_port_for_preview = 0
+default_input_values = [0, 0.0, 1, 0.0, 2, 0.02, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
+
+[sub_resource type="VisualShaderNodeColorOp" id="VisualShaderNodeColorOp_lg20u"]
+
+[sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_igkw8"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0), 2, Quaternion(1, 1, 1, 1)]
+op_type = 5
+
+[sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_1p54u"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0), 2, Quaternion(0.5, 0.5, 0.5, 1)]
+op_type = 5
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_gq2bc"]
+default_input_values = [0, 0.0, 1, 0.0, 2, 0.0, 3, 1.0]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_air6c"]
+constant = 0.3
+
+[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_sw3i3"]
+default_input_values = [0, 0.2]
+initialized = true
+script = ExtResource("3_j3g1h")
 
 [resource]
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 
-// Varyings
-varying vec2 v_uv;
-varying vec3 v_center;
 
-
-
-
-void vertex() {
-	vec3 n_out4p0;
-	vec3 n_out4p1;
-// Expression:4
-	n_out4p0 = vec3(0.0, 0.0, 0.0);
-	n_out4p1 = vec3(0.0, 0.0, 0.0);
-	{
-		void vertex() {
-		    // Calculate the center point of the quad
-		    vec4 centerPosition = (gl_PositionIn[0] + gl_PositionIn[1] + gl_PositionIn[2] + gl_PositionIn[3]) * 0.25;
-		    n_out4p0 = centerPosition.xy;
-			n_out4p1 = VERTEX.xy
-		    // Other vertex shader operations...
-		}
-	}
-
-
-// Output:0
-	UV = vec2(n_out4p1.xy);
-
-
-// VaryingSetter:5
-	v_center = n_out4p0;
-
-
-	v_uv = vec2(0.0);
+// PerlinNoise4D
+vec4 _permute_perlin4d_noise_func(vec4 x) {
+	return ((x*34.0)+1.0)*x - floor(((x*34.0)+1.0)*x * (1.0 / 289.0)) * 289.0;
+}
+float _perlin4dNoiseFunc(vec4 P) {
+	vec4 Pi0 = floor(P);
+	vec4 Pi1 = Pi0 + 1.0;
+	Pi0 = Pi0 - floor(Pi0 * (1.0 / 289.0)) * 289.0;
+	Pi1 = Pi1 - floor(Pi1 * (1.0 / 289.0)) * 289.0;
+	vec4 Pf0 = fract(P);
+	vec4 Pf1 = Pf0 - 1.0;
+	vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+	vec4 iy = vec4(Pi0.yy, Pi1.yy);
+	vec4 iz0 = vec4(Pi0.zzzz);
+	vec4 iz1 = vec4(Pi1.zzzz);
+	vec4 iw0 = vec4(Pi0.wwww);
+	vec4 iw1 = vec4(Pi1.wwww);
+	
+	vec4 ixy = _permute_perlin4d_noise_func(_permute_perlin4d_noise_func(ix) + iy);
+	vec4 ixy0 = _permute_perlin4d_noise_func(ixy + iz0);
+	vec4 ixy1 = _permute_perlin4d_noise_func(ixy + iz1);
+	vec4 ixy00 = _permute_perlin4d_noise_func(ixy0 + iw0);
+	vec4 ixy01 = _permute_perlin4d_noise_func(ixy0 + iw1);
+	vec4 ixy10 = _permute_perlin4d_noise_func(ixy1 + iw0);
+	vec4 ixy11 = _permute_perlin4d_noise_func(ixy1 + iw1);
+	
+	vec4 gx00 = ixy00 * (1.0 / 7.0);
+	vec4 gy00 = floor(gx00) * (1.0 / 7.0);
+	vec4 gz00 = floor(gy00) * (1.0 / 6.0);
+	gx00 = fract(gx00) - 0.5;
+	gy00 = fract(gy00) - 0.5;
+	gz00 = fract(gz00) - 0.5;
+	vec4 gw00 = vec4(0.75) - abs(gx00) - abs(gy00) - abs(gz00);
+	vec4 sw00 = step(gw00, vec4(0.0));
+	gx00 -= sw00 * (step(0.0, gx00) - 0.5);
+	gy00 -= sw00 * (step(0.0, gy00) - 0.5);
+	
+	vec4 gx01 = ixy01 * (1.0 / 7.0);
+	vec4 gy01 = floor(gx01) * (1.0 / 7.0);
+	vec4 gz01 = floor(gy01) * (1.0 / 6.0);
+	gx01 = fract(gx01) - 0.5;
+	gy01 = fract(gy01) - 0.5;
+	gz01 = fract(gz01) - 0.5;
+	vec4 gw01 = vec4(0.75) - abs(gx01) - abs(gy01) - abs(gz01);
+	vec4 sw01 = step(gw01, vec4(0.0));
+	gx01 -= sw01 * (step(0.0, gx01) - 0.5);
+	gy01 -= sw01 * (step(0.0, gy01) - 0.5);
+	
+	vec4 gx10 = ixy10 * (1.0 / 7.0);
+	vec4 gy10 = floor(gx10) * (1.0 / 7.0);
+	vec4 gz10 = floor(gy10) * (1.0 / 6.0);
+	gx10 = fract(gx10) - 0.5;
+	gy10 = fract(gy10) - 0.5;
+	gz10 = fract(gz10) - 0.5;
+	vec4 gw10 = vec4(0.75) - abs(gx10) - abs(gy10) - abs(gz10);
+	vec4 sw10 = step(gw10, vec4(0.0));
+	gx10 -= sw10 * (step(0.0, gx10) - 0.5);
+	gy10 -= sw10 * (step(0.0, gy10) - 0.5);
+	
+	vec4 gx11 = ixy11 * (1.0 / 7.0);
+	vec4 gy11 = floor(gx11) * (1.0 / 7.0);
+	vec4 gz11 = floor(gy11) * (1.0 / 6.0);
+	gx11 = fract(gx11) - 0.5;
+	gy11 = fract(gy11) - 0.5;
+	gz11 = fract(gz11) - 0.5;
+	vec4 gw11 = vec4(0.75) - abs(gx11) - abs(gy11) - abs(gz11);
+	vec4 sw11 = step(gw11, vec4(0.0));
+	gx11 -= sw11 * (step(0.0, gx11) - 0.5);
+	gy11 -= sw11 * (step(0.0, gy11) - 0.5);
+	
+	vec4 g0000 = vec4(gx00.x,gy00.x,gz00.x,gw00.x);
+	vec4 g1000 = vec4(gx00.y,gy00.y,gz00.y,gw00.y);
+	vec4 g0100 = vec4(gx00.z,gy00.z,gz00.z,gw00.z);
+	vec4 g1100 = vec4(gx00.w,gy00.w,gz00.w,gw00.w);
+	vec4 g0010 = vec4(gx10.x,gy10.x,gz10.x,gw10.x);
+	vec4 g1010 = vec4(gx10.y,gy10.y,gz10.y,gw10.y);
+	vec4 g0110 = vec4(gx10.z,gy10.z,gz10.z,gw10.z);
+	vec4 g1110 = vec4(gx10.w,gy10.w,gz10.w,gw10.w);
+	vec4 g0001 = vec4(gx01.x,gy01.x,gz01.x,gw01.x);
+	vec4 g1001 = vec4(gx01.y,gy01.y,gz01.y,gw01.y);
+	vec4 g0101 = vec4(gx01.z,gy01.z,gz01.z,gw01.z);
+	vec4 g1101 = vec4(gx01.w,gy01.w,gz01.w,gw01.w);
+	vec4 g0011 = vec4(gx11.x,gy11.x,gz11.x,gw11.x);
+	vec4 g1011 = vec4(gx11.y,gy11.y,gz11.y,gw11.y);
+	vec4 g0111 = vec4(gx11.z,gy11.z,gz11.z,gw11.z);
+	vec4 g1111 = vec4(gx11.w,gy11.w,gz11.w,gw11.w);
+	
+	vec4 norm00 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0000, g0000), dot(g0100, g0100), dot(g1000, g1000), dot(g1100, g1100));
+	g0000 *= norm00.x;
+	g0100 *= norm00.y;
+	g1000 *= norm00.z;
+	g1100 *= norm00.w;
+	
+	vec4 norm01 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0001, g0001), dot(g0101, g0101), dot(g1001, g1001), dot(g1101, g1101));
+	g0001 *= norm01.x;
+	g0101 *= norm01.y;
+	g1001 *= norm01.z;
+	g1101 *= norm01.w;
+	
+	vec4 norm10 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0010, g0010), dot(g0110, g0110), dot(g1010, g1010), dot(g1110, g1110));
+	g0010 *= norm10.x;
+	g0110 *= norm10.y;
+	g1010 *= norm10.z;
+	g1110 *= norm10.w;
+	
+	vec4 norm11 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g0011, g0011), dot(g0111, g0111), dot(g1011, g1011), dot(g1111, g1111));
+	g0011 *= norm11.x;
+	g0111 *= norm11.y;
+	g1011 *= norm11.z;
+	g1111 *= norm11.w;
+	
+	float n0000 = dot(g0000, Pf0);
+	float n1000 = dot(g1000, vec4(Pf1.x, Pf0.yzw));
+	float n0100 = dot(g0100, vec4(Pf0.x, Pf1.y, Pf0.zw));
+	float n1100 = dot(g1100, vec4(Pf1.xy, Pf0.zw));
+	float n0010 = dot(g0010, vec4(Pf0.xy, Pf1.z, Pf0.w));
+	float n1010 = dot(g1010, vec4(Pf1.x, Pf0.y, Pf1.z, Pf0.w));
+	float n0110 = dot(g0110, vec4(Pf0.x, Pf1.yz, Pf0.w));
+	float n1110 = dot(g1110, vec4(Pf1.xyz, Pf0.w));
+	float n0001 = dot(g0001, vec4(Pf0.xyz, Pf1.w));
+	float n1001 = dot(g1001, vec4(Pf1.x, Pf0.yz, Pf1.w));
+	float n0101 = dot(g0101, vec4(Pf0.x, Pf1.y, Pf0.z, Pf1.w));
+	float n1101 = dot(g1101, vec4(Pf1.xy, Pf0.z, Pf1.w));
+	float n0011 = dot(g0011, vec4(Pf0.xy, Pf1.zw));
+	float n1011 = dot(g1011, vec4(Pf1.x, Pf0.y, Pf1.zw));
+	float n0111 = dot(g0111, vec4(Pf0.x, Pf1.yzw));
+	float n1111 = dot(g1111, Pf1);
+	
+	vec4 fade_xyzw = Pf0 * Pf0 * Pf0 * (Pf0 * (Pf0 * 6.0 - 15.0) + 10.0);
+	vec4 n_0w = mix(vec4(n0000, n1000, n0100, n1100), vec4(n0001, n1001, n0101, n1101), fade_xyzw.w);
+	vec4 n_1w = mix(vec4(n0010, n1010, n0110, n1110), vec4(n0011, n1011, n0111, n1111), fade_xyzw.w);
+	vec4 n_zw = mix(n_0w, n_1w, fade_xyzw.z);
+	vec2 n_yzw = mix(n_zw.xy, n_zw.zw, fade_xyzw.y);
+	float n_xyzw = mix(n_yzw.x, n_yzw.y, fade_xyzw.x);
+	return 2.2 * n_xyzw;
 }
 
 void fragment() {
-	vec3 n_out33p0;
-// Expression:33
-	n_out33p0 = vec3(0.0, 0.0, 0.0);
+// ColorConstant:18
+	vec4 n_out18p0 = vec4(0.000000, 0.000000, 0.000000, 1.000000);
+
+
+	float n_out9p0;
+// ScaledTIME:9
+	float n_in9p0 = 0.20000;
 	{
-		uniform vec2 u_center;
-		
-		void fragment() {
-			vec3 u_center = VARYING(u_center);
-		    vec2 uv = VARYING(v_uv); // UV coordinates interpolated from the vertex shader
-		    vec2 centerToFragment = uv - u_center;
-		    float distance = length(centerToFragment);
-		
-		    // Apply a falloff function to control the mist intensity
-		    float mistIntensity = smoothstep(0.0, 1.0, distance);
-		
-		    // Use the mist intensity to blend the fragment color with the mist color
-		    vec4 mistColor = vec4(1.0, 1.0, 1.0, 1.0); // Replace with your desired mist color
-		    n_out33p0 = mix(mistColor, COLOR, mistIntensity);
-		}
+		n_out9p0 = n_in9p0 * TIME;
 	}
 
 
-// ColorConstant:32
-	vec4 n_out32p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+	float n_out11p0;
+// PerlinNoise4D:11
+	vec3 n_in11p1 = vec3(0.00000, 0.00000, 0.00000);
+	float n_in11p2 = 10.00000;
+	float n_in11p3 = 1.00000;
+	{
+		n_out11p0 = _perlin4dNoiseFunc(vec4((UV.xy + n_in11p1.xy) * n_in11p2, n_in11p3, n_out9p0));
+	}
+
+
+// ColorOp:12
+	vec3 n_out12p0 = abs(vec3(n_out18p0.xyz) - vec3(n_out11p0));
+
+
+// VectorFunc:29
+	vec4 n_out29p0 = vec4(1.0) - vec4(n_out12p0, 0.0);
+
+
+// Vector4Constant:26
+	vec4 n_out26p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
+	vec3 n_out33p0;
+// If:33
+	float n_in33p2 = 0.02000;
+	vec3 n_in33p4 = vec3(0.00000, 0.00000, 0.00000);
+	vec3 n_in33p5 = vec3(0.00000, 0.00000, 0.00000);
+	if(abs(n_out29p0.x - n_out26p0.x) < n_in33p2)
+	{
+		n_out33p0 = vec3(n_out29p0.xyz);
+	}
+	else if(n_out29p0.x < n_out26p0.x)
+	{
+		n_out33p0 = n_in33p5;
+	}
+	else
+	{
+		n_out33p0 = n_in33p4;
+	}
+
+
+// FloatConstant:40
+	float n_out40p0 = 0.300000;
+
+
+// VectorCompose:39
+	float n_in39p3 = 1.00000;
+	vec4 n_out39p0 = vec4(n_out40p0, n_out40p0, n_out40p0, n_in39p3);
+
+
+// Clamp:38
+	vec4 n_in38p1 = vec4(0.00000, 0.00000, 0.00000, 0.00000);
+	vec4 n_out38p0 = clamp(vec4(n_out33p0, 0.0), n_in38p1, n_out39p0);
+
+
+// VectorFunc:28
+	vec4 n_out28p0 = -(vec4(n_out12p0, 0.0));
+
+
+// Input:2
+	vec4 n_out2p0 = COLOR;
+
+
+// FloatConstant:13
+	float n_out13p0 = 0.300000;
+
+
+// VectorCompose:14
+	float n_in14p3 = 0.00000;
+	vec4 n_out14p0 = vec4(n_out13p0, n_out13p0, n_out13p0, n_in14p3);
+
+
+// VectorOp:3
+	vec4 n_out3p0 = n_out2p0 - n_out14p0;
+
+
+// ColorOp:21
+	vec3 n_out21p0 = vec3(1.0) - (vec3(1.0) - vec3(n_out28p0.xyz)) * (vec3(1.0) - vec3(n_out3p0.xyz));
+
+
+// ColorOp:35
+	vec3 n_out35p0 = vec3(1.0) - (vec3(1.0) - vec3(n_out38p0.xyz)) * (vec3(1.0) - n_out21p0);
+
+
+// Clamp:36
+	vec4 n_in36p1 = vec4(0.00000, 0.00000, 0.00000, 0.00000);
+	vec4 n_in36p2 = vec4(1.00000, 1.00000, 1.00000, 1.00000);
+	vec4 n_out36p0 = clamp(vec4(n_out35p0, 0.0), n_in36p1, n_in36p2);
 
 
 // Output:0
-	ALBEDO = n_out33p0;
-	METALLIC = n_out32p0.x;
+	ALBEDO = vec3(n_out36p0.xyz);
+	METALLIC = n_out29p0.x;
+	ROUGHNESS = n_out29p0.x;
 
 
 }
 "
-graph_offset = Vector2(-436.809, -122.415)
-varyings/v_uv = "0,3"
-varyings/v_center = "0,4"
+graph_offset = Vector2(-645.942, -326.704)
 nodes/vertex/0/position = Vector2(780, 220)
-nodes/vertex/4/node = SubResource("VisualShaderNodeExpression_kqvo5")
-nodes/vertex/4/position = Vector2(-240, 0)
-nodes/vertex/4/size = Vector2(717.5, 465.7)
-nodes/vertex/4/input_ports = ""
-nodes/vertex/4/output_ports = "0,4,center_out;1,4,uv_out;"
-nodes/vertex/4/expression = "void vertex() {
-    // Calculate the center point of the quad
-    vec4 centerPosition = (gl_PositionIn[0] + gl_PositionIn[1] + gl_PositionIn[2] + gl_PositionIn[3]) * 0.25;
-    center_out = centerPosition.xy;
-	uv_out = VERTEX.xy
-    // Other vertex shader operations...
-}"
-nodes/vertex/5/node = SubResource("VisualShaderNodeVaryingSetter_g5a27")
-nodes/vertex/5/position = Vector2(760, 20)
-nodes/vertex/connections = PackedInt32Array(4, 0, 5, 0, 4, 1, 0, 4)
 nodes/fragment/0/position = Vector2(920, 120)
-nodes/fragment/31/node = SubResource("VisualShaderNodeColorConstant_jtg6u")
-nodes/fragment/31/position = Vector2(720, 100)
-nodes/fragment/32/node = SubResource("VisualShaderNodeColorConstant_6xioo")
-nodes/fragment/32/position = Vector2(700, 340)
-nodes/fragment/33/node = SubResource("VisualShaderNodeExpression_mx5g8")
-nodes/fragment/33/position = Vector2(-20, 120)
-nodes/fragment/33/size = Vector2(688, 440)
-nodes/fragment/33/input_ports = ""
-nodes/fragment/33/output_ports = "0,4,colour_out;"
-nodes/fragment/33/expression = "uniform vec2 u_center;
-
-void fragment() {
-	vec3 u_center = VARYING(u_center);
-    vec2 uv = VARYING(v_uv); // UV coordinates interpolated from the vertex shader
-    vec2 centerToFragment = uv - u_center;
-    float distance = length(centerToFragment);
-
-    // Apply a falloff function to control the mist intensity
-    float mistIntensity = smoothstep(0.0, 1.0, distance);
-
-    // Use the mist intensity to blend the fragment color with the mist color
-    vec4 mistColor = vec4(1.0, 1.0, 1.0, 1.0); // Replace with your desired mist color
-    colour_out = mix(mistColor, COLOR, mistIntensity);
-}"
-nodes/fragment/connections = PackedInt32Array(32, 0, 0, 2, 33, 0, 0, 0)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_aj13h")
+nodes/fragment/2/position = Vector2(-860, 120)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVectorOp_udwv0")
+nodes/fragment/3/position = Vector2(0, 120)
+nodes/fragment/9/node = SubResource("VisualShaderNodeCustom_sw3i3")
+nodes/fragment/9/position = Vector2(-740, -20)
+nodes/fragment/11/node = SubResource("VisualShaderNodeCustom_01eaj")
+nodes/fragment/11/position = Vector2(-500, -280)
+nodes/fragment/12/node = SubResource("VisualShaderNodeColorOp_s13ry")
+nodes/fragment/12/position = Vector2(-300, -380)
+nodes/fragment/13/node = SubResource("VisualShaderNodeFloatConstant_4ha7d")
+nodes/fragment/13/position = Vector2(-440, 240)
+nodes/fragment/14/node = SubResource("VisualShaderNodeVectorCompose_j5jl2")
+nodes/fragment/14/position = Vector2(-220, 180)
+nodes/fragment/18/node = SubResource("VisualShaderNodeColorConstant_excpe")
+nodes/fragment/18/position = Vector2(-480, -380)
+nodes/fragment/21/node = SubResource("VisualShaderNodeColorOp_3x6k6")
+nodes/fragment/21/position = Vector2(220, -140)
+nodes/fragment/26/node = SubResource("VisualShaderNodeVec4Constant_q5jqm")
+nodes/fragment/26/position = Vector2(-500, -680)
+nodes/fragment/28/node = SubResource("VisualShaderNodeVectorFunc_k432r")
+nodes/fragment/28/position = Vector2(-80, -260)
+nodes/fragment/29/node = SubResource("VisualShaderNodeVectorFunc_3v13i")
+nodes/fragment/29/position = Vector2(20, -560)
+nodes/fragment/33/node = SubResource("VisualShaderNodeIf_r2k83")
+nodes/fragment/33/position = Vector2(260, -620)
+nodes/fragment/35/node = SubResource("VisualShaderNodeColorOp_lg20u")
+nodes/fragment/35/position = Vector2(560, -220)
+nodes/fragment/36/node = SubResource("VisualShaderNodeClamp_igkw8")
+nodes/fragment/36/position = Vector2(720, -60)
+nodes/fragment/38/node = SubResource("VisualShaderNodeClamp_1p54u")
+nodes/fragment/38/position = Vector2(880, -560)
+nodes/fragment/39/node = SubResource("VisualShaderNodeVectorCompose_gq2bc")
+nodes/fragment/39/position = Vector2(700, -520)
+nodes/fragment/40/node = SubResource("VisualShaderNodeFloatConstant_air6c")
+nodes/fragment/40/position = Vector2(480, -460)
+nodes/fragment/connections = PackedInt32Array(9, 0, 11, 4, 13, 0, 14, 0, 13, 0, 14, 1, 11, 0, 12, 1, 18, 0, 12, 0, 12, 0, 28, 0, 3, 0, 21, 1, 14, 0, 3, 1, 12, 0, 29, 0, 29, 0, 33, 0, 26, 0, 33, 1, 29, 0, 33, 3, 28, 0, 21, 0, 21, 0, 35, 1, 33, 0, 38, 0, 38, 0, 35, 0, 35, 0, 36, 0, 36, 0, 0, 0, 39, 0, 38, 2, 40, 0, 39, 0, 40, 0, 39, 1, 40, 0, 39, 2, 13, 0, 14, 2, 2, 0, 3, 0, 29, 0, 0, 3, 29, 0, 0, 2)
