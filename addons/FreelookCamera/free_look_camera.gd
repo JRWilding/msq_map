@@ -40,6 +40,6 @@ func _process(delta):
 	).normalized()
 	
 	if Input.is_physical_key_pressed(KEY_SHIFT): # boost
-		translate(direction * _velocity * delta * boost_speed_multiplier)
+		get_parent().translate(direction * _velocity * delta * boost_speed_multiplier)
 	else:
-		translate(direction * _velocity * delta)
+		get_parent().translate(direction * _velocity * delta)

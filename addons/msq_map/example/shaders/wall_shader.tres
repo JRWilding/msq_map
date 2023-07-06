@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=18 format=3 uid="uid://k7dcokjxlynt"]
+[gd_resource type="VisualShader" load_steps=21 format=3 uid="uid://k7dcokjxlynt"]
 
 [ext_resource type="Texture2D" uid="uid://4euo55ed2cs6" path="res://addons/msq_map/example/textures/cavern-walls_albedo.png" id="1_c4l6i"]
 [ext_resource type="Script" path="res://addons/shaderV/rgba/normalFromHeightmap.gd" id="1_sueds"]
@@ -7,6 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://x2yjpk10rm6f" path="res://addons/msq_map/example/textures/cavern-walls_metallic.png" id="4_0aq2x"]
 [ext_resource type="Texture2D" uid="uid://cglc0ec2tstsk" path="res://addons/msq_map/example/textures/cavern-walls_normal-ogl.png" id="5_wkf6t"]
 [ext_resource type="Texture2D" uid="uid://b5w5xidmuy43l" path="res://addons/msq_map/example/textures/cavern-walls_roughness.png" id="6_unt1r"]
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_g0yd8"]
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_qw4c0"]
+function = 31
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_25yix"]
+output_port_for_preview = 0
+default_input_values = [0, 0.0, 1, 0.0, 2, 0.0, 3, 0.0]
+op_type = 2
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_glae1"]
 texture = ExtResource("1_c4l6i")
@@ -76,6 +88,21 @@ void fragment() {
 	vec4 n_out6p0 = texture(tex_frg_6, UV);
 
 
+// VectorDecompose:10
+	float n_out10p0 = n_out6p0.x;
+	float n_out10p1 = n_out6p0.y;
+	float n_out10p2 = n_out6p0.z;
+	float n_out10p3 = n_out6p0.w;
+
+
+// FloatFunc:11
+	float n_out11p0 = 1.0 - n_out10p1;
+
+
+// VectorCompose:12
+	vec4 n_out12p0 = vec4(n_out10p0, n_out11p0, n_out10p2, n_out10p3);
+
+
 // Texture2D:4
 	vec4 n_out4p0 = texture(tex_frg_4, UV);
 
@@ -85,12 +112,13 @@ void fragment() {
 	METALLIC = n_out5p0.x;
 	ROUGHNESS = n_out9p0.x;
 	AO = n_out3p0.x;
-	NORMAL_MAP = vec3(n_out6p0.xyz);
+	NORMAL_MAP = vec3(n_out12p0.xyz);
 	NORMAL_MAP_DEPTH = n_out4p0.x;
 
 
 }
 "
+graph_offset = Vector2(-103.948, 12.5875)
 nodes/vertex/2/node = SubResource("VisualShaderNodeTexture2DParameter_f6p3n")
 nodes/vertex/2/position = Vector2(-780, 80)
 nodes/vertex/3/node = SubResource("VisualShaderNodeCustom_8a7y0")
@@ -106,11 +134,17 @@ nodes/fragment/2/position = Vector2(340, -340)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_l5xrs")
 nodes/fragment/3/position = Vector2(100, 20)
 nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_rm7wg")
-nodes/fragment/4/position = Vector2(80, 360)
+nodes/fragment/4/position = Vector2(100, 340)
 nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_87pjm")
 nodes/fragment/5/position = Vector2(100, -240)
 nodes/fragment/6/node = SubResource("VisualShaderNodeTexture_en1da")
 nodes/fragment/6/position = Vector2(340, 220)
 nodes/fragment/9/node = SubResource("VisualShaderNodeTexture_ptd41")
 nodes/fragment/9/position = Vector2(340, -80)
-nodes/fragment/connections = PackedInt32Array(6, 0, 0, 9, 3, 0, 0, 6, 9, 0, 0, 3, 5, 0, 0, 2, 4, 0, 0, 10, 2, 0, 0, 0)
+nodes/fragment/10/node = SubResource("VisualShaderNodeVectorDecompose_g0yd8")
+nodes/fragment/10/position = Vector2(22.3693, 662.254)
+nodes/fragment/11/node = SubResource("VisualShaderNodeFloatFunc_qw4c0")
+nodes/fragment/11/position = Vector2(220, 660)
+nodes/fragment/12/node = SubResource("VisualShaderNodeVectorCompose_25yix")
+nodes/fragment/12/position = Vector2(380, 600)
+nodes/fragment/connections = PackedInt32Array(3, 0, 0, 6, 9, 0, 0, 3, 5, 0, 0, 2, 2, 0, 0, 0, 10, 1, 11, 0, 11, 0, 12, 1, 10, 0, 12, 0, 10, 2, 12, 2, 10, 3, 12, 3, 6, 0, 10, 0, 12, 0, 0, 9, 4, 0, 0, 10)
