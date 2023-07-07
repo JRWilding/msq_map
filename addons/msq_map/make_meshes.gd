@@ -3,7 +3,7 @@ class_name MarchingSquaresGenerator extends Node
 
 @export var instance := 0:
 	set(value):
-		if get_tree() == null:
+		if not is_inside_tree():
 			return
 		instance = value
 		generateAll()
@@ -58,22 +58,69 @@ static func writeToTool(arr: Array, tool: SurfaceTool):
 		tool.set_uv(Vector2(v.x, v.z))
 		tool.add_vertex(v)
 
-static func writeToToolUV(verts: Array, uvs: Array, cols: Array, tool: SurfaceTool):
+static func writeToToolUV(verts: Array, uvs, cols, tool: SurfaceTool):
 	var i = 0
 	for v in verts:
-		tool.set_uv(uvs[i])
-		tool.set_color(cols[i])
+		if uvs != null:
+			tool.set_uv(uvs[i])
+		if cols != null:
+			tool.set_color(cols[i])
 		i += 1
 		tool.add_vertex(v)
-			
+
+static func wallPlane(verts: Array, subdivide):
+	print("wallPlane", verts)
+	var out = [[],[]]
+	
+	if verts.is_empty():
+		return out
+	
+	for v in range(0, verts.size(), 4):
+		var ptl = verts[v]
+		var pbr = verts[v+2]
+		print(ptl)
+		print(pbr)
+		var step = (pbr - ptl) / subdivide
+		print(step)
+		var stepY = Vector3(0,step.y,0)
+		step.y = 0
+		var uvStep = Vector2(1,1) / subdivide
+		var uvStepY = Vector2(0,uvStep.y)
+		uvStep.y = 0
+		
+		var cur = ptl
+		var uvCur = Vector2(0,0)
+		
+		for y in range(subdivide):
+			for x in range(subdivide):
+				out[0].push_back(cur)
+				out[1].push_back(uvCur)
+				out[0].push_back(cur + step)
+				out[1].push_back(uvCur + uvStep)
+				out[0].push_back(cur + step + stepY)
+				out[1].push_back(uvCur + uvStep + uvStepY)
+				out[0].push_back(cur + step + stepY)
+				out[1].push_back(uvCur + uvStep + uvStepY)
+				out[0].push_back(cur + stepY)
+				out[1].push_back(uvCur + uvStepY)
+				out[0].push_back(cur)
+				out[1].push_back(uvCur)
+				cur += step
+				uvCur += uvStep
+			cur = ptl
+			cur.y = ptl.y + (stepY.y * (y+1))
+			uvCur = Vector2(0,uvStepY.y * (y + 1))
+	
+	return out
+	
 static func finishTool(tool: SurfaceTool):	
 	tool.index()
 	tool.generate_normals()
 	tool.generate_tangents()
-	
+		
 # returns an Array[ArrayArray[] for 1 cell with the given marching square config
-# Arrays are the triangles for floor, wall, ceiling, in order
-# (the outer array will be size=3)
+# Arrays are the triangles for floor, wall, ceiling, wallPlanes in order
+# (the outer array will be size=4)
 # mid array is mesh, uvs, edges, in order
 # (the middle array will be size=3)
 # inner array is the data (either vec3 for verts or vec2 for uvs)
@@ -85,6 +132,7 @@ static func generateVerts(config: int) -> Array[Array]:
 	var verts: Array[Vector3]
 	var uvs: Array[Vector2]
 	var cols: Array[Color]
+	var walls: Array[Vector3]
 	match config:
 		0:
 			verts = [
@@ -99,6 +147,7 @@ static func generateVerts(config: int) -> Array[Array]:
 				w, w, w,
 				w, w, w
 			]
+			walls = []
 		1:
 			verts = [
 				dtl, dtr, dl,
@@ -124,6 +173,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, e, hw
 			]
+			walls = [
+				ub, ul, dl, db
+			]
 		2:
 			verts = [
 				dbl, dtl, db,
@@ -148,6 +200,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, e, e,
 				e, e, hw
+			]
+			walls = [
+				ur, ub, db, dr
 			]
 		3:
 			verts = [
@@ -177,6 +232,10 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, qw,
 				e, hw, qw
 			]
+			walls = [
+				ur, ul, dl, dr
+			]
+			print("walls", walls)
 		4:
 			verts = [
 				dtl, dt, dbl,
@@ -201,6 +260,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, e, e,
 				e, hw, e,
+			]
+			walls = [
+				ut, ur, dr, dt
 			]
 		5:
 			verts = [
@@ -245,6 +307,10 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e, 
 				e, w, e
 			]
+			walls = [
+				ut, ul, dl, dt,
+				ub, ur, dr, db
+			]
 		6:
 			verts = [
 				dtl, dt, dbl,
@@ -273,6 +339,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, qw, e,
 				qw, hw, e				
 			]
+			walls = [
+				ut, ub, db, dt
+			]
 		7:
 			verts = [
 				dtl, dt, dl,
@@ -298,6 +367,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				hyw, e, e,
 				hyw, qw, e
 			]
+			walls = [
+				ut, ul, dl, dt
+			]
 		8:
 			verts = [
 				dt, dtr, dbr,
@@ -322,6 +394,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, e, e,
 				hw, e, e
+			]
+			walls = [
+				ul, ut, dt, dl
 			]
 		9:
 			verts = [
@@ -350,6 +425,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, w, w, 
 				w, e, e
+			]
+			walls = [
+				ub, ut, dt, db
 			]
 		10:
 			verts = [
@@ -388,6 +466,10 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, e, e
 			]
+			walls = [
+				ul, ub, db, dl,
+				ur, ut, dt, dr
+			]
 		11:
 			verts = [
 				utl, ut, ubl,
@@ -412,6 +494,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e, 
 				e, e, e, 
 				e, w, e
+			]
+			walls = [
+				ur, ut, dt, dr
 			]
 		12:
 			verts = [
@@ -441,6 +526,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				w, e, e,
 				e, w, w
 			]
+			walls = [
+				ul, ur, dr, dl
+			]
 		13:
 			verts = [
 				utl, utr, ur,
@@ -466,6 +554,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e, 
 				e, e, qw 
 			]
+			walls = [
+				ub, ur, dr, db
+			]
 		14:
 			verts = [
 				utl, utr, ul,
@@ -490,6 +581,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				w, w, w, 
 				w, w, w, 
 				e, e, w
+			]
+			walls = [
+				ul, ub, db, dl
 			]
 		15:
 			verts = [
@@ -529,7 +623,7 @@ static func generateVerts(config: int) -> Array[Array]:
 		arr[2].push_back(col3)
 		arr[2].push_back(col1)
 	
-	return [fl, wa, ce]
+	return [fl, wa, ce, [walls,[],[]]]
 	
 func generateNode(config: int) -> MeshInstance3D:
 	var n = "mesh" + str(config)
@@ -544,6 +638,8 @@ func generateNode(config: int) -> MeshInstance3D:
 		return meshNode
 	
 
+var wallPlaneCache = null
+
 func setNode(meshNode: MeshInstance3D, config: int) -> MeshInstance3D:
 	var genMesh = MarchingSquaresGenerator.generateVerts(config)
 	var fTool = P1Utils.makeTool()
@@ -551,7 +647,21 @@ func setNode(meshNode: MeshInstance3D, config: int) -> MeshInstance3D:
 	var cTool = P1Utils.makeTool()
 	
 	MarchingSquaresGenerator.writeToToolUV(genMesh[0][0], genMesh[0][1], genMesh[0][2], fTool)
-	MarchingSquaresGenerator.writeToToolUV(genMesh[1][0], genMesh[1][1], genMesh[1][2], wTool)
+
+	print("set node")
+#	if wallPlaneCache == null:
+	wallPlaneCache = []
+	wallPlaneCache.resize(16)
+	
+	print("wpc", wallPlaneCache[config])
+	if wallPlaneCache[config] == null:
+		wallPlaneCache[config] = MarchingSquaresGenerator.wallPlane(genMesh[3][0], 8)
+	
+	var wallPlane = wallPlaneCache[config]	
+	if wallPlane.is_empty():
+		MarchingSquaresGenerator.writeToToolUV(genMesh[1][0], genMesh[1][1], genMesh[1][2], wTool)
+	else:
+		MarchingSquaresGenerator.writeToToolUV(wallPlane[0], wallPlane[1], null, wTool)
 	MarchingSquaresGenerator.writeToToolUV(genMesh[2][0], genMesh[2][1], genMesh[2][2], cTool)
 			
 	MarchingSquaresGenerator.finishTool(fTool)
@@ -575,31 +685,26 @@ func setNode(meshNode: MeshInstance3D, config: int) -> MeshInstance3D:
 	
 func generateAll():
 	
-	print ("wc: ", wc)
-	print ("hwc: ", hwc)
-	print ("qwc: ", qwc)
-	print ("hywc: ", hywc)
-	
 	for i in range(get_child_count()):
 		var c = get_child(0)
 		remove_child(c)
 		
-	var _mesh0 = generateNode(0)
-	var _mesh1 = generateNode(1)
-	var _mesh2 = generateNode(2)
+	#var _mesh0 = generateNode(0)
+	#var _mesh1 = generateNode(1)
+	#var _mesh2 = generateNode(2)
 	var _mesh3 = generateNode(3)
-	var _mesh4 = generateNode(4)
-	var _mesh5 = generateNode(5)
-	var _mesh6 = generateNode(6)
-	var _mesh7 = generateNode(7)
-	var _mesh8 = generateNode(8)
-	var _mesh9 = generateNode(9)
-	var _mesh10 = generateNode(10)
-	var _mesh11 = generateNode(11)
-	var _mesh12 = generateNode(12)
-	var _mesh13 = generateNode(13)
-	var _mesh14 = generateNode(14)
-	var _mesh15 = generateNode(15)
+	#var _mesh4 = generateNode(4)
+	#var _mesh5 = generateNode(5)
+	#var _mesh6 = generateNode(6)
+	#var _mesh7 = generateNode(7)
+	#var _mesh8 = generateNode(8)
+	#var _mesh9 = generateNode(9)
+	#var _mesh10 = generateNode(10)
+	#var _mesh11 = generateNode(11)
+	#var _mesh12 = generateNode(12)
+	#var _mesh13 = generateNode(13)
+	#var _mesh14 = generateNode(14)
+	#var _mesh15 = generateNode(15)
 		
 	#dupe(_mesh13, Vector3(-3, 0, 0))
 	#dupe(_mesh8, Vector3(-2, 0, 0))

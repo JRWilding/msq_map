@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bql0lgukbm5od"]
+[gd_scene load_steps=8 format=3 uid="uid://bql0lgukbm5od"]
 
 [ext_resource type="Shader" path="res://addons/msq_map/example/shaders/test.gdshader" id="2_nkbq1"]
+[ext_resource type="Shader" uid="uid://byheym5t6p34r" path="res://test.tres" id="3_3a2cw"]
 [ext_resource type="Script" path="res://addons/FreelookCamera/free_look_camera.gd" id="3_bfufh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fsvti"]
@@ -12,12 +13,28 @@ shader_parameter/speed2 = 0.2
 [sub_resource type="TorusMesh" id="TorusMesh_ruffk"]
 material = SubResource("ShaderMaterial_fsvti")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwwct"]
+render_priority = 0
+shader = ExtResource("3_3a2cw")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8uual"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_lwwct")
+subdivide_width = 1024
+subdivide_depth = 1024
+center_offset = Vector3(0, 0, 0.71)
+orientation = 2
+
 [node name="test" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 mesh = SubResource("TorusMesh_ruffk")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 5)
 fov = 76.2212
 script = ExtResource("3_bfufh")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_8uual")

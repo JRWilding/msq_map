@@ -8,20 +8,25 @@
 properties/0/path = NodePath(".:player")
 properties/0/spawn = true
 properties/0/sync = false
+properties/0/watch = false
 properties/1/path = NodePath(".:position")
 properties/1/spawn = true
 properties/1/sync = true
+properties/1/watch = false
 properties/2/path = NodePath(".:exp_velocity")
 properties/2/spawn = true
 properties/2/sync = true
+properties/2/watch = false
 properties/3/path = NodePath("Camera3D:position")
 properties/3/spawn = true
 properties/3/sync = true
+properties/3/watch = false
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nt6og"]
 properties/0/path = NodePath("PlayerInput:direction")
 properties/0/spawn = false
 properties/0/sync = true
+properties/0/watch = false
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_n7lgk"]
 albedo_color = Color(0.203922, 0.34902, 0.117647, 1)
@@ -55,7 +60,9 @@ mesh = SubResource("CylinderMesh_xvx5c")
 shape = SubResource("ConvexPolygonShape3D_2r3p6")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)
 script = ExtResource("3_dgrti")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.894427, 0.447214, 0, -0.447214, 0.894427, 0, 1, 2)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]

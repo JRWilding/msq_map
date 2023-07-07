@@ -77,7 +77,7 @@ func copyToTool(tool: SurfaceTool, genMesh: Array, offset: Vector3, sc: Vector3)
 	var tVerts = []
 	var uvs = genMesh[1]
 	var tUvs = []
-	var edges = genMesh[2]
+	var edges = genMesh[2] if genMesh.size() > 2 else null
 	var map = Vector2(iw / chunkSize, ih / chunkSize) * Vector2(sc.x, sc.z)
 
 	var isWall = false
@@ -136,7 +136,7 @@ func populateGridMap():
 				
 func toPoly():
 	
-	if not Engine.is_editor_hint() || get_tree() == null:
+	if not Engine.is_editor_hint() || not is_inside_tree():
 		return
 		
 	
@@ -179,6 +179,8 @@ func toPoly():
 	var chunks = Node3D.new()
 	P1Utils.addEditorChild(self, chunks, "Chunks")
 	
+	var cache = []
+	cache.resize(16)
 	var chunk = 0
 	for sy in range(0, ih, chunkSize):
 		for sx in range(0, iw, chunkSize):
@@ -200,7 +202,15 @@ func toPoly():
 					var offset = Vector3(x, 0, y)
 					var cellMesh = meshes[c]
 					hasFloor = copyToTool(floorTool, cellMesh[0], offset, vMapScaleWithHeight) || hasFloor
-					hasWall = copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight) || hasWall
+					
+					if cache[c] == null:
+						cache[c] = MarchingSquaresGenerator.wallPlane(cellMesh[3][0], 4)
+					var wallPlane = cache[c]
+					if wallPlane.is_empty():
+						hasWall = copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight) || hasWall
+					else:
+						hasWall = copyToTool(wallTool, wallPlane, offset, vMapScaleWithHeight) || hasWall
+					
 					hasCeiling = copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight) || hasCeiling
 			
 			print("chunk ", chunk)
@@ -232,7 +242,7 @@ func toPoly():
 			
 func rebuild():
 	
-	if not Engine.is_editor_hint() || get_tree() == null:
+	if not Engine.is_editor_hint() || not is_inside_tree():
 		return
 		
 	print("rebuilding")
