@@ -102,16 +102,21 @@ func copyToTool(tool: SurfaceTool, genMesh: Array, offset: Vector3, sc: Vector3)
 	
 	return true
 	
-func addToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, mat: Material) -> MeshInstance3D:
+func addMeshToWorld(parent: Node, colLayer: int, mesh: Mesh, nodeName: String, mat: Material) -> MeshInstance3D:
 	var meshNode = MeshInstance3D.new()
 	P1Utils.addEditorChild(parent, meshNode, nodeName)
-	MarchingSquaresGenerator.finishTool(tool)
-	meshNode.mesh = tool.commit()
+	meshNode.mesh = mesh
 	meshNode.material_override = mat
 	meshNode.create_trimesh_collision()
 	var col: StaticBody3D = meshNode.get_child(0)
 	col.collision_layer = colLayer
 	return meshNode
+	
+	
+func addToolToWorld(parent: Node, colLayer: int, tool: SurfaceTool, nodeName: String, mat: Material) -> MeshInstance3D:
+	MarchingSquaresGenerator.finishTool(tool)
+	var mesh = tool.commit()
+	return addMeshToWorld(parent, colLayer, mesh, nodeName, mat)
 
 func populateGridMap():
 	var grid: GridMap = GridMap.new()
@@ -189,6 +194,7 @@ func toPoly():
 			var floorTool = P1Utils.makeTool(Color.DARK_GRAY)
 			var hasWall = false
 			var wallTool = P1Utils.makeTool(Color.DARK_SLATE_GRAY)
+			var wallPlanes = [] # [[tl, br],[uv-tl, uv-br]]
 			var hasCeiling = false
 			var ceilingTool = P1Utils.makeTool(Color.DIM_GRAY)
 	
@@ -208,6 +214,11 @@ func toPoly():
 					var wallPlane = cache[c]
 					if wallPlane.is_empty():
 						hasWall = copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight) || hasWall
+						#wallPlanes.push_back([
+						#	[cellMesh[1][0][0], cellMesh[1][0][cellMesh[1][0].size() - 1]],
+						#[cellMesh[1][1][0], cellMesh[1][1][cellMesh[1][1].size() - 1]]
+						#])
+						#hasWall = true
 					else:
 						hasWall = copyToTool(wallTool, wallPlane, offset, vMapScaleWithHeight) || hasWall
 					
@@ -217,11 +228,22 @@ func toPoly():
 			var c = str(chunk)
 			chunk += 1
 			if hasCeiling:
-				addToWorld(chunks, 3, ceilingTool, "Ceiling" + c, ceilingMaterial)
+				addToolToWorld(chunks, 3, ceilingTool, "Ceiling" + c, ceilingMaterial)
 			if hasWall:
-				addToWorld(chunks, 2, wallTool, "Wall" + c, wallMaterial)
+				if not wallPlanes.is_empty():
+					for w in wallPlanes:
+						var sp = PlaneMesh.new()
+						var s = (w[0][1] - w[0][0]) / 2
+						sp.center_offset = Vector3(0,1,0)#w[0][0] + (s)
+						sp.size = Vector2(s.x, s.z)
+						sp.orientation = PlaneMesh.FACE_Z
+						sp.subdivide_width = 16
+						sp.subdivide_depth = 16
+						addMeshToWorld(chunks, 2, wallPlanes, "Wall" + c, wallMaterial)	
+				else:
+					addToolToWorld(chunks, 2, wallTool, "Wall" + c, wallMaterial)
 			if hasFloor:
-				var floorNode = addToWorld(chunks, 1, floorTool, "Floor" + c, floorMaterial)
+				var floorNode = addToolToWorld(chunks, 1, floorTool, "Floor" + c, floorMaterial)
 				floorNode.add_to_group("msq_map_nav_floor")
 			
 	var floorNav = NavigationMesh.new()

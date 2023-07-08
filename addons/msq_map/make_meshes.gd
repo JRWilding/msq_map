@@ -71,7 +71,7 @@ static func writeToToolUV(verts: Array, uvs, cols, tool: SurfaceTool):
 static func wallPlane(verts: Array, subdivide):
 	print("wallPlane", verts)
 	var out = [[],[]]
-	
+	var plane = PlaneMesh.new()
 	if verts.is_empty():
 		return out
 	
@@ -689,22 +689,22 @@ func generateAll():
 		var c = get_child(0)
 		remove_child(c)
 		
-	#var _mesh0 = generateNode(0)
-	#var _mesh1 = generateNode(1)
-	#var _mesh2 = generateNode(2)
+	var _mesh0 = generateNode(0)
+	var _mesh1 = generateNode(1)
+	var _mesh2 = generateNode(2)
 	var _mesh3 = generateNode(3)
-	#var _mesh4 = generateNode(4)
-	#var _mesh5 = generateNode(5)
-	#var _mesh6 = generateNode(6)
-	#var _mesh7 = generateNode(7)
-	#var _mesh8 = generateNode(8)
-	#var _mesh9 = generateNode(9)
-	#var _mesh10 = generateNode(10)
-	#var _mesh11 = generateNode(11)
-	#var _mesh12 = generateNode(12)
-	#var _mesh13 = generateNode(13)
-	#var _mesh14 = generateNode(14)
-	#var _mesh15 = generateNode(15)
+	var _mesh4 = generateNode(4)
+	var _mesh5 = generateNode(5)
+	var _mesh6 = generateNode(6)
+	var _mesh7 = generateNode(7)
+	var _mesh8 = generateNode(8)
+	var _mesh9 = generateNode(9)
+	var _mesh10 = generateNode(10)
+	var _mesh11 = generateNode(11)
+	var _mesh12 = generateNode(12)
+	var _mesh13 = generateNode(13)
+	var _mesh14 = generateNode(14)
+	var _mesh15 = generateNode(15)
 		
 	#dupe(_mesh13, Vector3(-3, 0, 0))
 	#dupe(_mesh8, Vector3(-2, 0, 0))

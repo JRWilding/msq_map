@@ -20,9 +20,9 @@ shader = ExtResource("3_3a2cw")
 [sub_resource type="PlaneMesh" id="PlaneMesh_8uual"]
 lightmap_size_hint = Vector2i(12, 12)
 material = SubResource("ShaderMaterial_lwwct")
-subdivide_width = 1024
-subdivide_depth = 1024
-center_offset = Vector3(0, 0, 0.71)
+size = Vector2(1, 1)
+subdivide_width = 16
+subdivide_depth = 16
 orientation = 2
 
 [node name="test" type="Node3D"]
@@ -37,4 +37,17 @@ fov = 76.2212
 script = ExtResource("3_bfufh")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_8uual")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 0, 1)
+mesh = SubResource("PlaneMesh_8uual")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 1, 1)
+mesh = SubResource("PlaneMesh_8uual")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 1, 0)
 mesh = SubResource("PlaneMesh_8uual")
