@@ -49,6 +49,11 @@ extends Node3D
 		ceilingMaterial = value
 		toPoly()
 		
+@export var wallPlaneSubdivision := 8:
+	set(value):
+		wallPlaneSubdivision = value
+		toPoly()
+		
 var cellIsSolid: Array[int] = []
 var cellMSq: Array[int] = []
 var iw: int
@@ -190,6 +195,10 @@ func toPoly():
 	for sy in range(0, ih, chunkSize):
 		for sx in range(0, iw, chunkSize):
 			
+			var chunkNode = Node3D.new()
+			var chunkNum = str(chunk)
+			chunk += 1
+			P1Utils.addEditorChild(chunks, chunkNode, "Chunk" + chunkNum)
 			var hasFloor = false
 			var floorTool = P1Utils.makeTool(Color.DARK_GRAY)
 			var hasWall = false
@@ -210,7 +219,7 @@ func toPoly():
 					hasFloor = copyToTool(floorTool, cellMesh[0], offset, vMapScaleWithHeight) || hasFloor
 					
 					if cache[c] == null:
-						cache[c] = MarchingSquaresGenerator.wallPlane(cellMesh[3][0], 4)
+						cache[c] = MarchingSquaresGenerator.wallPlane(cellMesh[3][0], wallPlaneSubdivision)
 					var wallPlane = cache[c]
 					if wallPlane.is_empty():
 						hasWall = copyToTool(wallTool, cellMesh[1], offset, vMapScaleWithHeight) || hasWall
@@ -224,11 +233,8 @@ func toPoly():
 					
 					hasCeiling = copyToTool(ceilingTool, cellMesh[2], offset, vMapScaleWithHeight) || hasCeiling
 			
-			print("chunk ", chunk)
-			var c = str(chunk)
-			chunk += 1
 			if hasCeiling:
-				addToolToWorld(chunks, 3, ceilingTool, "Ceiling" + c, ceilingMaterial)
+				addToolToWorld(chunkNode, 3, ceilingTool, "Ceiling" + chunkNum, ceilingMaterial)
 			if hasWall:
 				if not wallPlanes.is_empty():
 					for w in wallPlanes:
@@ -239,11 +245,11 @@ func toPoly():
 						sp.orientation = PlaneMesh.FACE_Z
 						sp.subdivide_width = 16
 						sp.subdivide_depth = 16
-						addMeshToWorld(chunks, 2, wallPlanes, "Wall" + c, wallMaterial)	
+						addMeshToWorld(chunkNode, 2, wallPlanes, "Wall" + chunkNum, wallMaterial)
 				else:
-					addToolToWorld(chunks, 2, wallTool, "Wall" + c, wallMaterial)
+					addToolToWorld(chunkNode, 2, wallTool, "Wall" + chunkNum, wallMaterial)
 			if hasFloor:
-				var floorNode = addToolToWorld(chunks, 1, floorTool, "Floor" + c, floorMaterial)
+				var floorNode = addToolToWorld(chunkNode, 1, floorTool, "Floor" + chunkNum, floorMaterial)
 				floorNode.add_to_group("msq_map_nav_floor")
 			
 	var floorNav = NavigationMesh.new()

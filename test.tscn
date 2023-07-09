@@ -16,6 +16,7 @@ material = SubResource("ShaderMaterial_fsvti")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lwwct"]
 render_priority = 0
 shader = ExtResource("3_3a2cw")
+shader_parameter/Wall_Height = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_8uual"]
 lightmap_size_hint = Vector2i(12, 12)

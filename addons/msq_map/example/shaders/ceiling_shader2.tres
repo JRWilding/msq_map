@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=25 format=3 uid="uid://cqyrcphc8yvp1"]
+[gd_resource type="VisualShader" load_steps=24 format=3 uid="uid://cqyrcphc8yvp1"]
 
 [ext_resource type="Script" path="res://addons/shaderV/rgba/noise/perlin4d.gd" id="1_shtif"]
 [ext_resource type="Script" path="res://addons/shaderV/tools/TimeScaled.gd" id="3_e7qn8"]
@@ -14,7 +14,7 @@ output_port_for_preview = 0
 operator = 1
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_4ha7d"]
-constant = 0.3
+constant = 0.5
 
 [sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_j5jl2"]
 default_input_values = [0, 0.0, 1, 0.0, 2, 0.0, 3, 0.0]
@@ -71,19 +71,15 @@ constant = 0.3
 
 [sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_mrfcd"]
 output_port_for_preview = 0
-default_input_values = [0, 0.0, 1, 0.0, 2, 0.1, 3, Vector3(0, 0, 0), 4, Vector3(1, 0, 0), 5, Vector3(1, 0, 0)]
+default_input_values = [0, 0.0, 1, 0.0, 2, 0.15, 3, Vector3(0, 0, 0), 4, Vector3(1, 1, 1), 5, Vector3(1, 1, 1)]
 
 [sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_w6m06"]
 function = 31
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_u556e"]
-constant = Color(1, 1, 1, 0)
+constant = Color(0, 0, 0, 1)
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_iwb4y"]
-
-[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_q5tdm"]
-default_input_values = [0, Quaternion(0, 0, 0, 0)]
-op_type = 2
 
 [sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_sw3i3"]
 default_input_values = [0, 0.2]
@@ -307,7 +303,7 @@ void fragment() {
 
 
 // FloatConstant:13
-	float n_out13p0 = 0.300000;
+	float n_out13p0 = 0.500000;
 
 
 // VectorCompose:14
@@ -337,43 +333,41 @@ void fragment() {
 	float n_out42p0 = 1.0 - n_out13p0;
 
 
+// ColorConstant:43
+	vec4 n_out43p0 = vec4(0.000000, 0.000000, 0.000000, 1.000000);
+
+
+// ColorConstant:44
+	vec4 n_out44p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
 	vec3 n_out41p0;
 // If:41
-	float n_in41p2 = 0.10000;
-	vec3 n_in41p3 = vec3(0.00000, 0.00000, 0.00000);
-	vec3 n_in41p4 = vec3(1.00000, 0.00000, 0.00000);
-	vec3 n_in41p5 = vec3(1.00000, 0.00000, 0.00000);
+	float n_in41p2 = 0.15000;
 	if(abs(n_out21p0.x - n_out42p0) < n_in41p2)
 	{
-		n_out41p0 = n_in41p3;
+		n_out41p0 = vec3(n_out43p0.xyz);
 	}
 	else if(n_out21p0.x < n_out42p0)
 	{
-		n_out41p0 = n_in41p5;
+		n_out41p0 = vec3(n_out44p0.xyz);
 	}
 	else
 	{
-		n_out41p0 = n_in41p4;
+		n_out41p0 = vec3(n_out43p0.xyz);
 	}
-
-
-// VectorDecompose:46
-	float n_out46p0 = vec4(n_out41p0, 0.0).x;
-	float n_out46p1 = vec4(n_out41p0, 0.0).y;
-	float n_out46p2 = vec4(n_out41p0, 0.0).z;
-	float n_out46p3 = vec4(n_out41p0, 0.0).w;
 
 
 // Output:0
 	ALBEDO = vec3(n_out36p0.xyz);
-	ALPHA = n_out46p0;
+	ALPHA = n_out41p0.x;
 	METALLIC = n_out29p0.x;
 	ROUGHNESS = n_out29p0.x;
 
 
 }
 "
-graph_offset = Vector2(-234.253, 20.6908)
+graph_offset = Vector2(-454.462, 75.7745)
 nodes/vertex/0/position = Vector2(780, 220)
 nodes/fragment/0/position = Vector2(1100, 120)
 nodes/fragment/2/node = SubResource("VisualShaderNodeInput_aj13h")
@@ -418,6 +412,4 @@ nodes/fragment/43/node = SubResource("VisualShaderNodeColorConstant_u556e")
 nodes/fragment/43/position = Vector2(-20, 760)
 nodes/fragment/44/node = SubResource("VisualShaderNodeColorConstant_iwb4y")
 nodes/fragment/44/position = Vector2(-20, 840)
-nodes/fragment/46/node = SubResource("VisualShaderNodeVectorDecompose_q5tdm")
-nodes/fragment/46/position = Vector2(833.026, 478.428)
-nodes/fragment/connections = PackedInt32Array(9, 0, 11, 4, 13, 0, 14, 0, 13, 0, 14, 1, 11, 0, 12, 1, 18, 0, 12, 0, 12, 0, 28, 0, 12, 0, 29, 0, 29, 0, 33, 0, 29, 0, 33, 3, 33, 0, 38, 0, 35, 0, 36, 0, 40, 0, 39, 0, 40, 0, 39, 1, 40, 0, 39, 2, 13, 0, 14, 2, 29, 0, 0, 3, 29, 0, 0, 2, 21, 0, 35, 1, 38, 0, 35, 0, 28, 0, 21, 0, 39, 0, 38, 2, 36, 0, 0, 0, 14, 0, 3, 1, 13, 0, 42, 0, 42, 0, 41, 1, 3, 0, 21, 1, 2, 0, 3, 0, 21, 0, 41, 0, 41, 0, 46, 0, 46, 0, 0, 1)
+nodes/fragment/connections = PackedInt32Array(9, 0, 11, 4, 13, 0, 14, 0, 13, 0, 14, 1, 11, 0, 12, 1, 18, 0, 12, 0, 12, 0, 28, 0, 12, 0, 29, 0, 29, 0, 33, 0, 29, 0, 33, 3, 33, 0, 38, 0, 35, 0, 36, 0, 40, 0, 39, 0, 40, 0, 39, 1, 40, 0, 39, 2, 13, 0, 14, 2, 21, 0, 35, 1, 38, 0, 35, 0, 28, 0, 21, 0, 39, 0, 38, 2, 14, 0, 3, 1, 13, 0, 42, 0, 3, 0, 21, 1, 2, 0, 3, 0, 21, 0, 41, 0, 29, 0, 0, 3, 29, 0, 0, 2, 36, 0, 0, 0, 41, 0, 0, 1, 42, 0, 41, 1, 43, 0, 41, 3, 43, 0, 41, 4, 44, 0, 41, 5)
