@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cg3hksjxygofp"]
+[gd_scene load_steps=13 format=3 uid="uid://cg3hksjxygofp"]
 
 [ext_resource type="Script" path="res://addons/msq_map/example/player.gd" id="1_1mpbv"]
 [ext_resource type="Script" path="res://addons/msq_map/example/player_input.gd" id="2_1uqlb"]
+[ext_resource type="Shader" uid="uid://colkrlak0cwvd" path="res://addons/msq_map/example/shaders/token.tres" id="3_1qarp"]
 [ext_resource type="Script" path="res://addons/FreelookCamera/free_look_camera.gd" id="3_dgrti"]
+[ext_resource type="Script" path="res://addons/msq_map/example/torch.gd" id="4_mg8r2"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lqns4"]
 properties/0/path = NodePath(".:player")
@@ -28,17 +30,35 @@ properties/0/spawn = false
 properties/0/sync = true
 properties/0/watch = false
 
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_n7lgk"]
-albedo_color = Color(0.203922, 0.34902, 0.117647, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kdna"]
+render_priority = 0
+shader = ExtResource("3_1qarp")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_xvx5c"]
-material = SubResource("ORMMaterial3D_n7lgk")
-height = 0.2
+material = SubResource("ShaderMaterial_2kdna")
+height = 0.1
+radial_segments = 32
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2r3p6"]
-points = PackedVector3Array(0, -0.1, -0.5, -0.0490407, -0.1, -0.497651, 0, 0.1, -0.5, 0.0489429, -0.1, -0.497651, -0.0490407, 0.1, -0.497651, -0.097592, -0.1, -0.490407, 0.0489429, 0.1, -0.497651, 0.0974941, -0.1, -0.490407, -0.097592, 0.1, -0.490407, -0.145164, -0.1, -0.478563, 0.0974941, 0.1, -0.490407, 0.145067, -0.1, -0.478563, -0.145164, 0.1, -0.478563, -0.191366, -0.1, -0.46202, 0.145067, 0.1, -0.478563, 0.191269, -0.1, -0.46202, -0.191366, 0.1, -0.46202, -0.235709, -0.1, -0.440975, 0.191269, 0.1, -0.46202, 0.235611, -0.1, -0.440975, -0.235709, 0.1, -0.440975, -0.2778, -0.1, -0.415818, 0.235611, 0.1, -0.440975, 0.277702, -0.1, -0.415818, -0.2778, 0.1, -0.415818, -0.317247, -0.1, -0.386551, 0.277702, 0.1, -0.415818, 0.31715, -0.1, -0.386551, -0.317247, 0.1, -0.386551, -0.353563, -0.1, -0.353563, 0.31715, 0.1, -0.386551, 0.353465, -0.1, -0.353563, -0.353563, 0.1, -0.353563, -0.386551, -0.1, -0.317247, 0.353465, 0.1, -0.353563, 0.386453, -0.1, -0.317247, -0.386551, 0.1, -0.317247, -0.415818, -0.1, -0.2778, 0.386453, 0.1, -0.317247, 0.41572, -0.1, -0.2778, -0.415818, 0.1, -0.2778, -0.440975, -0.1, -0.235709, 0.41572, 0.1, -0.2778, 0.440877, -0.1, -0.235709, -0.440975, 0.1, -0.235709, -0.46202, -0.1, -0.191366, 0.440877, 0.1, -0.235709, 0.461922, -0.1, -0.191366, -0.46202, 0.1, -0.191366, -0.478563, -0.1, -0.145164, 0.461922, 0.1, -0.191366, 0.478465, -0.1, -0.145164, -0.478563, 0.1, -0.145164, -0.490407, -0.1, -0.097592, 0.478465, 0.1, -0.145164, 0.490309, -0.1, -0.097592, -0.490407, 0.1, -0.097592, -0.497651, -0.1, -0.0490407, 0.490309, 0.1, -0.097592, 0.497553, -0.1, -0.0490407, -0.497651, 0.1, -0.0490407, -0.5, -0.1, 0, 0.497553, 0.1, -0.0490407, 0.5, -0.1, 0, -0.5, 0.1, 0, -0.497651, -0.1, 0.0489429, 0.5, 0.1, 0, 0.497553, -0.1, 0.0489429, -0.497651, 0.1, 0.0489429, -0.490407, -0.1, 0.0974941, 0.497553, 0.1, 0.0489429, 0.490309, -0.1, 0.0974941, -0.490407, 0.1, 0.0974941, -0.478563, -0.1, 0.145067, 0.490309, 0.1, 0.0974941, 0.478465, -0.1, 0.145067, -0.478563, 0.1, 0.145067, -0.46202, -0.1, 0.191269, 0.478465, 0.1, 0.145067, 0.461922, -0.1, 0.191269, -0.46202, 0.1, 0.191269, -0.440975, -0.1, 0.235611, 0.461922, 0.1, 0.191269, 0.440877, -0.1, 0.235611, -0.440975, 0.1, 0.235611, -0.415818, -0.1, 0.277702, 0.440877, 0.1, 0.235611, 0.41572, -0.1, 0.277702, -0.415818, 0.1, 0.277702, -0.386551, -0.1, 0.31715, 0.41572, 0.1, 0.277702, 0.386453, -0.1, 0.31715, -0.386551, 0.1, 0.31715, -0.353563, -0.1, 0.353465, 0.386453, 0.1, 0.31715, 0.353465, -0.1, 0.353465, -0.353563, 0.1, 0.353465, -0.317247, -0.1, 0.386453, 0.353465, 0.1, 0.353465, 0.31715, -0.1, 0.386453, -0.317247, 0.1, 0.386453, -0.2778, -0.1, 0.41572, 0.31715, 0.1, 0.386453, 0.277702, -0.1, 0.41572, -0.2778, 0.1, 0.41572, -0.235709, -0.1, 0.440877, 0.277702, 0.1, 0.41572, 0.235611, -0.1, 0.440877, -0.235709, 0.1, 0.440877, -0.191366, -0.1, 0.461922, 0.235611, 0.1, 0.440877, 0.191269, -0.1, 0.461922, -0.191366, 0.1, 0.461922, -0.145164, -0.1, 0.478465, 0.191269, 0.1, 0.461922, 0.145067, -0.1, 0.478465, -0.145164, 0.1, 0.478465, -0.097592, -0.1, 0.490309, 0.145067, 0.1, 0.478465, 0.0974941, -0.1, 0.490309, -0.097592, 0.1, 0.490309, -0.0490407, -0.1, 0.497553, 0.0974941, 0.1, 0.490309, 0.0489429, -0.1, 0.497553, -0.0490407, 0.1, 0.497553, 0, -0.1, 0.5, 0.0489429, 0.1, 0.497553, 0, 0.1, 0.5)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kximv"]
+height = 0.1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2qqdf"]
+noise_type = 0
+frequency = 0.8448
+fractal_type = 0
+fractal_weighted_strength = 0.4
+cellular_distance_function = 3
+cellular_jitter = 0.4
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j3m3b"]
+height = 1
+in_3d_space = true
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_2qqdf")
 
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 collision_layer = 8
 collision_mask = 3
 platform_on_leave = 2
@@ -57,12 +77,27 @@ script = ExtResource("2_1uqlb")
 mesh = SubResource("CylinderMesh_xvx5c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_2r3p6")
+shape = SubResource("CylinderShape3D_kximv")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+light_color = Color(0.992157, 0.721569, 0.203922, 1)
+light_energy = 1.566
+shadow_enabled = true
+script = ExtResource("4_mg8r2")
+noise = SubResource("NoiseTexture2D_j3m3b")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.2)
+light_color = Color(0.572549, 0.243137, 0.0392157, 1)
+light_energy = 0.504
+shadow_enabled = true
+omni_range = 10.0
+omni_attenuation = 0.241484
+script = ExtResource("4_mg8r2")
+noise = SubResource("NoiseTexture2D_j3m3b")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 script = ExtResource("3_dgrti")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.894427, 0.447214, 0, -0.447214, 0.894427, 0, 1, 2)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]

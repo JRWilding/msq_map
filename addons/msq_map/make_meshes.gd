@@ -3,14 +3,16 @@ class_name MarchingSquaresGenerator extends Node
 
 @export var instance := 0:
 	set(value):
+		instance = value
 		if not is_inside_tree():
 			return
-		instance = value
 		generateAll()
 
 @export var material : Material:
 	set(value):
 		material = value
+		if not is_inside_tree():
+			return
 		generateAll()
 		
 const dtl = Vector3(0, 0, 0)
@@ -52,6 +54,7 @@ const hwc = 0.1#1 - (wc /2.0)
 const hw = Color(hwc, hwc, hwc, 1)
 const hywc = 0#1 - sqrt(pow(wc,2) + pow(wc/2, 2))
 const hyw = Color(hywc, hywc, hywc, 1)
+const hyw2 = Color(hwc, hwc, hwc, 1)
 
 static func writeToTool(arr: Array, tool: SurfaceTool):
 	for v in arr:
@@ -298,9 +301,9 @@ static func generateVerts(config: int) -> Array[Array]:
 				e, e, e,
 				e, e, e,
 				
-				e, qw, hyw,
-				e, hyw, e,
-				hyw, e, qw, 
+				e, qw, hyw2,
+				e, hyw2, e,
+				hyw2, e, qw, 
 				qw, e, e,
 				
 				e, e, e,
@@ -455,10 +458,10 @@ static func generateVerts(config: int) -> Array[Array]:
 				uvtr, uvbr, uvbl
 			]
 			cols = [
-				qw, e, hyw, 
+				qw, e, hyw2, 
 				e, e, qw, 
-				qw, e, hyw,
-				e, e, hyw, 
+				qw, e, hyw2,
+				e, e, hyw2, 
 				e, e, e, 
 				e, e, e,
 				e, e, w,

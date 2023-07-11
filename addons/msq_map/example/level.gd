@@ -25,8 +25,9 @@ func _exit_tree():
 func add_player(id: int):
 	var player = preload("res://addons/msq_map/example/player.tscn").instantiate()
 	player.player = id
-	var pos := Vector2.from_angle(randf() * 2 * PI)
-	player.position = Vector3(pos.x * spawn_random * randf(), 1, pos.y * spawn_random * randf())
+	#var pos := Vector2.from_angle(randf() * 2 * PI)
+	var spawn = $SpawnPoint
+	player.position = spawn.position#Vector3(pos.x * spawn_random * randf(), 1, pos.y * spawn_random * randf())
 	player.name = str(id)
 	$Players.add_child(player, true)
 	

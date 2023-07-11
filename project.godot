@@ -21,7 +21,7 @@ movie_writer/movie_file="C:/dev/godot/MarchingSquares/build/movie.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/control_camera3d/plugin.cfg", "res://addons/msq_map/plugin.cfg")
+enabled=PackedStringArray("res://addons/control_camera3d/plugin.cfg", "res://addons/dice_syntax/plugin.cfg", "res://addons/msq_map/plugin.cfg", "res://addons/script_panel_plus/plugin.cfg", "res://addons/sprite_painter/plugin.cfg")
 
 [layer_names]
 

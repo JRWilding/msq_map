@@ -22,8 +22,8 @@ shader_parameter/Wall_Height = 1.0
 lightmap_size_hint = Vector2i(12, 12)
 material = SubResource("ShaderMaterial_lwwct")
 size = Vector2(1, 1)
-subdivide_width = 16
-subdivide_depth = 16
+subdivide_width = 8
+subdivide_depth = 8
 orientation = 2
 
 [node name="test" type="Node3D"]
@@ -37,18 +37,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 5)
 fov = 76.2212
 script = ExtResource("3_bfufh")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 0, 0)
-mesh = SubResource("PlaneMesh_8uual")
-
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 0, 1)
-mesh = SubResource("PlaneMesh_8uual")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 1, 1)
-mesh = SubResource("PlaneMesh_8uual")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, 1, 0)
 mesh = SubResource("PlaneMesh_8uual")
