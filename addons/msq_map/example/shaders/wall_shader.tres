@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=29 format=3 uid="uid://k7dcokjxlynt"]
+[gd_resource type="VisualShader" load_steps=31 format=3 uid="uid://k7dcokjxlynt"]
 
 [ext_resource type="Texture2D" uid="uid://4euo55ed2cs6" path="res://addons/msq_map/example/textures/cavern-walls_albedo.png" id="1_c4l6i"]
 [ext_resource type="Texture2D" uid="uid://bjb2m3mp52lpe" path="res://addons/msq_map/example/textures/cavern-walls_ao.png" id="2_sxwmi"]
@@ -45,30 +45,42 @@ input_name = "vertex"
 [sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_3meef"]
 operator = 1
 
-[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_d0x3k"]
-
-[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_g6nsa"]
-operator = 2
-
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_antme"]
 expanded_output_ports = [0]
 texture = ExtResource("3_a75jn")
+
+[sub_resource type="VisualShaderNodeMultiplyAdd" id="VisualShaderNodeMultiplyAdd_15g6a"]
+default_input_values = [0, Vector4(0, 0, 0, 0), 1, Vector4(1, 1, 1, 1), 2, Vector4(0, 0, 0, 0)]
+op_type = 3
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_lc0gk"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(1, 0, 1, 1)]
+op_type = 2
+operator = 2
+
+[sub_resource type="VisualShaderNodeVec4Constant" id="VisualShaderNodeVec4Constant_0o2v3"]
+constant = Quaternion(0.2, 0, 0.2, 1)
 
 [sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_5juoe"]
 default_input_values = [1, 0.0, 2, 1.0, 3, -1.0, 4, 1.0]
 initialized = true
 script = ExtResource("7_j7i0a")
 
-[sub_resource type="VisualShaderNodeVec3Constant" id="VisualShaderNodeVec3Constant_brq3m"]
-constant = Vector3(0.8, 0, 0.8)
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_7ubd7"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
+op_type = 2
+operator = 2
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_m54ak"]
+constant = 0.5
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_ydf46"]
+constant = 1.2
 
 [sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_r8ks7"]
 operator = 2
 
 [sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_bkh24"]
-
-[sub_resource type="VisualShaderNodeVec3Constant" id="VisualShaderNodeVec3Constant_6486r"]
-constant = Vector3(0.5, 0, 0.5)
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_ygjoj"]
 parameter_name = "Wall_Height"
@@ -102,20 +114,28 @@ void vertex() {
 	vec4 n_out15p0 = texture(tex_vtx_15, UV);
 
 
+// Vector4Constant:18
+	vec4 n_out18p0 = vec4(0.200000, 0.000000, 0.200000, 1.000000);
+
+
+// VectorOp:17
+	vec4 n_out17p0 = n_out15p0 * n_out18p0;
+
+
 // Input:9
 	vec3 n_out9p0 = NORMAL;
-
-
-// VectorOp:14
-	vec3 n_out14p0 = vec3(n_out15p0.xyz) * n_out9p0;
 
 
 // Input:11
 	vec3 n_out11p0 = VERTEX;
 
 
-// VectorOp:13
-	vec3 n_out13p0 = n_out14p0 + n_out11p0;
+// MultiplyAdd:16
+	vec4 n_out16p0 = fma(n_out17p0, vec4(n_out9p0, 0.0), vec4(n_out11p0, 0.0));
+
+
+// VectorOp:21
+	vec4 n_out21p0 = vec4(n_out9p0, 0.0) * n_out18p0;
 
 
 // VectorDecompose:5
@@ -128,28 +148,28 @@ void vertex() {
 	float n_out7p0 = Wall_Height;
 
 
-// Vector3Constant:6
-	vec3 n_out6p0 = vec3(0.500000, 0.000000, 0.500000);
+// FloatConstant:22
+	float n_out22p0 = 0.500000;
 
 
-// Vector3Constant:3
-	vec3 n_out3p0 = vec3(0.800000, 0.000000, 0.800000);
+// FloatConstant:23
+	float n_out23p0 = 1.200000;
 
 
 	vec3 n_out2p0;
 // Remap:2
 	float n_in2p1 = 0.00000;
 	{
-		n_out2p0 = _remapFunc(vec3(n_out5p1), vec2(n_in2p1, n_out7p0), vec2(n_out6p0.x, n_out3p0.x));
+		n_out2p0 = _remapFunc(vec3(n_out5p1), vec2(n_in2p1, n_out7p0), vec2(n_out22p0, n_out23p0));
 	}
 
 
 // VectorOp:4
-	vec3 n_out4p0 = n_out9p0 * n_out2p0;
+	vec3 n_out4p0 = vec3(n_out21p0.xyz) * n_out2p0;
 
 
 // VectorOp:12
-	vec3 n_out12p0 = n_out13p0 - n_out4p0;
+	vec3 n_out12p0 = vec3(n_out16p0.xyz) - n_out4p0;
 
 
 // Output:0
@@ -210,17 +230,13 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-775.66, 119.222)
+graph_offset = Vector2(-614.001, 75.8632)
 nodes/vertex/2/node = SubResource("VisualShaderNodeCustom_5juoe")
-nodes/vertex/2/position = Vector2(-180, 540)
-nodes/vertex/3/node = SubResource("VisualShaderNodeVec3Constant_brq3m")
-nodes/vertex/3/position = Vector2(-740, 680)
+nodes/vertex/2/position = Vector2(-140, 540)
 nodes/vertex/4/node = SubResource("VisualShaderNodeVectorOp_r8ks7")
 nodes/vertex/4/position = Vector2(0, 260)
 nodes/vertex/5/node = SubResource("VisualShaderNodeVectorDecompose_bkh24")
-nodes/vertex/5/position = Vector2(-380, 380)
-nodes/vertex/6/node = SubResource("VisualShaderNodeVec3Constant_6486r")
-nodes/vertex/6/position = Vector2(-740, 580)
+nodes/vertex/5/position = Vector2(-340, 360)
 nodes/vertex/7/node = SubResource("VisualShaderNodeFloatParameter_ygjoj")
 nodes/vertex/7/position = Vector2(-720, 360)
 nodes/vertex/9/node = SubResource("VisualShaderNodeInput_wgn3f")
@@ -229,13 +245,21 @@ nodes/vertex/11/node = SubResource("VisualShaderNodeInput_6ue3p")
 nodes/vertex/11/position = Vector2(-720, 280)
 nodes/vertex/12/node = SubResource("VisualShaderNodeVectorOp_3meef")
 nodes/vertex/12/position = Vector2(180, 100)
-nodes/vertex/13/node = SubResource("VisualShaderNodeVectorOp_d0x3k")
-nodes/vertex/13/position = Vector2(-20, -40)
-nodes/vertex/14/node = SubResource("VisualShaderNodeVectorOp_g6nsa")
-nodes/vertex/14/position = Vector2(-200, -100)
 nodes/vertex/15/node = SubResource("VisualShaderNodeTexture_antme")
 nodes/vertex/15/position = Vector2(-660, -120)
-nodes/vertex/connections = PackedInt32Array(13, 0, 12, 0, 4, 0, 12, 1, 14, 0, 13, 0, 11, 0, 13, 1, 15, 0, 14, 0, 11, 0, 5, 0, 7, 0, 2, 2, 5, 1, 2, 0, 6, 0, 2, 3, 3, 0, 2, 4, 2, 0, 4, 1, 9, 0, 4, 0, 9, 0, 14, 1, 12, 0, 0, 0)
+nodes/vertex/16/node = SubResource("VisualShaderNodeMultiplyAdd_15g6a")
+nodes/vertex/16/position = Vector2(-60, -20)
+nodes/vertex/17/node = SubResource("VisualShaderNodeVectorOp_lc0gk")
+nodes/vertex/17/position = Vector2(-240, -140)
+nodes/vertex/18/node = SubResource("VisualShaderNodeVec4Constant_0o2v3")
+nodes/vertex/18/position = Vector2(-680, -300)
+nodes/vertex/21/node = SubResource("VisualShaderNodeVectorOp_7ubd7")
+nodes/vertex/21/position = Vector2(-180, 180)
+nodes/vertex/22/node = SubResource("VisualShaderNodeFloatConstant_m54ak")
+nodes/vertex/22/position = Vector2(-420, 620)
+nodes/vertex/23/node = SubResource("VisualShaderNodeFloatConstant_ydf46")
+nodes/vertex/23/position = Vector2(-420, 720)
+nodes/vertex/connections = PackedInt32Array(11, 0, 5, 0, 7, 0, 2, 2, 16, 0, 12, 0, 9, 0, 16, 1, 15, 0, 17, 0, 17, 0, 16, 0, 18, 0, 17, 1, 2, 0, 4, 1, 5, 1, 2, 0, 11, 0, 16, 2, 12, 0, 0, 0, 4, 0, 12, 1, 9, 0, 21, 0, 18, 0, 21, 1, 21, 0, 4, 0, 22, 0, 2, 3, 23, 0, 2, 4)
 nodes/fragment/0/position = Vector2(700, 80)
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_glae1")
 nodes/fragment/2/position = Vector2(340, -340)

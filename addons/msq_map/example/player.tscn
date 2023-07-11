@@ -88,7 +88,7 @@ script = ExtResource("4_mg8r2")
 noise = SubResource("NoiseTexture2D_j3m3b")
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="OmniLight3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.2)
 light_color = Color(0.572549, 0.243137, 0.0392157, 1)
 light_energy = 0.504
 shadow_enabled = true
@@ -99,5 +99,3 @@ noise = SubResource("NoiseTexture2D_j3m3b")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 script = ExtResource("3_dgrti")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]

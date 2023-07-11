@@ -102,7 +102,7 @@ operator = 2
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_vk1cv"]
 
 [sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_ca3yt"]
-default_input_values = [0, 1.0, 1, 1.0]
+default_input_values = [0, 0.5, 1, 1.0]
 initialized = true
 script = ExtResource("2_572aq")
 
@@ -314,7 +314,7 @@ void fragment() {
 
 	float n_out60p0;
 // SinTIME:60
-	float n_in60p0 = 1.00000;
+	float n_in60p0 = 0.50000;
 	float n_in60p1 = 1.00000;
 	{
 		n_out60p0 = n_in60p1 * sin(n_in60p0 * TIME);
@@ -475,7 +475,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-433.897, -202.64)
+graph_offset = Vector2(-421.957, -58.4227)
 modes/cull = 2
 nodes/vertex/0/position = Vector2(780, 220)
 nodes/vertex/2/node = SubResource("VisualShaderNodeInput_hgsf6")
